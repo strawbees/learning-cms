@@ -1,0 +1,77 @@
+{
+  "name": "strawbees/learning-cms-wordpress",
+  "type": "project",
+  "description": "Learning CMS Wordpress, based on Bedrock (roots.io).",
+  "support": {
+    "issues": "https://github.com/strawbees/learning-cms-wordpress/issues"
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://wpackagist.org"
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "advanced-custom-fields/advanced-custom-fields-pro",
+        "version": "5.8.6",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://connect.advancedcustomfields.com/index.php?p=pro&a=download&k={%PLUGIN_ACF_KEY}&t={%version}"
+        },
+        "require": {
+          "composer/installers": "^1.4",
+          "ffraenz/private-composer-installer": "^3.0"
+        }
+      }
+    }
+  ],
+  "require": {
+    "php": ">=7.1",
+    "composer/installers": "^1.7",
+    "oscarotero/env": "^1.2.0",
+    "roots/wordpress": "5.2.3",
+    "roots/wp-config": "1.0.0",
+    "roots/wp-password-bcrypt": "1.0.0",
+    "vlucas/phpdotenv": "^3.4.0",
+    "wpackagist-plugin/advanced-custom-fields": "5.8.6",
+    "wpackagist-plugin/custom-post-type-ui": "1.6.2",
+    "wpackagist-plugin/disable-wordpress-updates": "1.6.6",
+    "wpackagist-theme/twentynineteen": "^1.4"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.4.2",
+    "roave/security-advisories": "dev-master"
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "installer-paths": {
+      "web/app/mu-plugins/{$name}/": [
+          "type:wordpress-muplugin",
+          "roots/wp-stage-switcher",
+          "wpackagist-plugin/custom-post-type-ui",
+          "wpackagist-plugin/advanced-custom-fields",
+          "wpackagist-plugin/disable-wordpress-updates"
+
+      ],
+      "web/app/plugins/{$name}/": ["type:wordpress-plugin"],
+      "web/app/themes/{$name}/": ["type:wordpress-theme"]
+    },
+    "wordpress-install-dir": "web/wp"
+  },
+  "scripts": {
+    "post-root-package-install": [
+      "php -r \"copy('.env.example', '.env');\""
+    ],
+    "test": [
+      "phpcs"
+    ]
+  }
+}
