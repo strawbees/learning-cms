@@ -8,6 +8,7 @@ set :repo_url, 'https://github.com/strawbees/learning-cms.git'
 # Hardcodes branch to always be master
 # This could be overridden in a stage config file
 set :branch, :master
+set :branch, ENV['BRANCH'] if ENV['BRANCH']
 
 set :deploy_to, -> { "/opt/bitnami/apps/#{fetch(:application)}/htdocs" }
 
