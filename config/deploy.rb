@@ -55,4 +55,4 @@ end
 # The above update_option_paths task is not run by default
 # Note that you need to have WP-CLI installed on your server
 # Uncomment the following line to run it on deploys if needed
-# after 'deploy:publishing', 'deploy:update_option_paths'
+after 'deploy:publishing', 'deploy:update_option_paths'
