@@ -4,11 +4,7 @@ set :repo_url, 'https://github.com/strawbees/learning-cms.git'
 # Branch options
 # Prompts for the branch name (defaults to current branch)
 #ask :branch, -> { `git rev-parse --abbrev-ref HEAD`.chomp }
-
-# Hardcodes branch to always be master
-# This could be overridden in a stage config file
-set :branch, :master
-set :branch, ENV['BRANCH'] if ENV['BRANCH']
+set :branch, ENV.fetch('REVISION', -> { `git rev-parse --abbrev-ref HEAD`.chomp })
 
 set :deploy_to, -> { "/opt/bitnami/apps/#{fetch(:application)}/htdocs" }
 
