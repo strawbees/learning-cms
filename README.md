@@ -41,7 +41,6 @@ curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.pha
 chmod +x wp-cli.phar
 mv wp-cli.phar /usr/local/bin/wp
 ```
-
 ## 3. Add bin paths to `/etc/environment`
 When our deploy system connects to the server via SSH, it will do it via a
 non-interactive shell, meaning that `~/.bashrc` or `~./.profile` won't be loaded
@@ -235,18 +234,18 @@ echo 'server {
     server_name  learning-cms-stage.strawbees.com;
     include "/opt/bitnami/apps/learning-cms/conf/nginx-app.conf";
 }
-#server {
-#    listen    443 ssl;
-#    root   "/opt/bitnami/apps/learning-cms/htdocs/current/web/";
-#    server_name  learning-cms-stage.strawbees.com;
-#    ssl_certificate  "/opt/bitnami/apps/learning-cms/conf/certs/server.crt";
-#    ssl_certificate_key  "/opt/bitnami/apps/learning-cms/conf/certs/server.key";
-#    ssl_session_cache    shared:SSL:1m;
-#    ssl_session_timeout  5m;
-#    ssl_ciphers  HIGH:!aNULL:!MD5;
-#    ssl_prefer_server_ciphers  on;
-#    include "/opt/bitnami/apps/learning-cms/conf/nginx-app.conf";
-#}
+server {
+    listen    443 ssl;
+    root   "/opt/bitnami/apps/learning-cms/htdocs/current/web/";
+    server_name  learning-cms-stage.strawbees.com;
+    ssl_certificate  "/opt/bitnami/apps/learning-cms/conf/server.crt";
+    ssl_certificate_key  "/opt/bitnami/apps/learning-cms/conf/server.key";
+    ssl_session_cache    shared:SSL:1m;
+    ssl_session_timeout  5m;
+    ssl_ciphers  HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers  on;
+    include "/opt/bitnami/apps/learning-cms/conf/nginx-app.conf";
+}
 ' >  /opt/bitnami/apps/learning-cms/conf/nginx-vhosts.conf
 ```
 Modify the existing "bitnami-apps" configs, so that they point to our newly
@@ -284,7 +283,7 @@ DB_PASSWORD=GENERATED_DB_PASSWORD
 DB_PREFIX=wp_
 
 WP_ENV=development
-WP_HOME=http://learning-cms-stage.strawbees.com
+WP_HOME=https://learning-cms-stage.strawbees.com
 WP_SITEURL=${WP_HOME}/wp
 
 # generate at https://roots.io/salts.html
@@ -298,7 +297,101 @@ LOGGED_IN_SALT=GENERATE_ME
 NONCE_SALT=GENERATE_ME
 ' > /opt/bitnami/apps/learning-cms/htdocs/shared/.env
 ```
-## 7. Snapshot the instance!
+## 7. SSL Certificates
+Boiled down from [Bitnami's guide](https://docs.bitnami.com/aws/apps/mattermost/administration/generate-configure-certificate-letsencrypt/). Maybe a good idea to check that link too!
+
+*NOTE: If you duplicate this server (eg. to make a test/staging version), you
+will need to re-run the steps below (from 7.2) with the correct domain.*
+
+
+### 7.1. Install the Lego client
+```shell
+# @remote
+# change to root
+sudo su
+
+# download and install lego
+cd /tmp
+curl -Ls https://api.github.com/repos/xenolf/lego/releases/latest | grep browser_download_url | grep linux_amd64 | cut -d '"' -f 4 | wget -i -
+tar xf lego_v3.1.0_linux_amd64.tar.gz
+mkdir -p /opt/bitnami/letsencrypt
+mv lego /opt/bitnami/letsencrypt/lego
+```
+### 7.2. Generate a Let’s Encrypt certificate
+Turn off all Bitnami services:
+```shell
+# @remote
+sudo /opt/bitnami/ctlscript.sh stop
+```
+Request a new certificate for your domain as below, both with and without the
+www prefix. Remember to replace the `DOMAIN` placeholder with your actual domain
+name, and the `EMAIL-ADDRESS` placeholder with your email address.
+
+You can use more than one domain (for example, DOMAIN and www.DOMAIN) by
+specifying the --domains option as many times as the number of domains you want
+to specify.
+
+```shell
+# @remote
+sudo /opt/bitnami/letsencrypt/lego --tls --email="EMAIL-ADDRESS" --domains="DOMAIN" --domains="www.DOMAIN" --path="/opt/bitnami/letsencrypt" run
+```
+
+### 7.3. Configure server to use the certificates
+```shell
+# @remote
+# change to root
+sudo su
+
+# delete any previous certificates
+rm -rf /opt/bitnami/apps/learning-cms/conf/server.key
+rm -rf /opt/bitnami/apps/learning-cms/conf/server.crt
+
+# symlink the certificates to the correct location
+ln -sf /opt/bitnami/letsencrypt/certificates/DOMAIN.key /opt/bitnami/apps/learning-cms/conf/server.key
+ln -sf /opt/bitnami/letsencrypt/certificates/DOMAIN.crt /opt/bitnami/apps/learning-cms/conf/server.crt
+chown root:root /opt/bitnami/nginx/conf/server*
+chmod 600 /opt/bitnami/nginx/conf/server*
+
+# restart the services
+/opt/bitnami/ctlscript.sh start
+```
+
+### 7.4. Renew certificates
+To automatically renew your certificates before they expire, write a script to
+perform the tasks and schedule a cron job to run the script periodically. To do
+this:
+
+Create a script at /opt/bitnami/letsencrypt/scripts/renew-certificate.sh
+```shell
+# @remote
+# change to root
+sudo su
+mkdir -p /opt/bitnami/letsencrypt/scripts
+touch /opt/bitnami/letsencrypt/scripts/renew-certificate.sh
+vim /opt/bitnami/letsencrypt/scripts/renew-certificate.sh
+chmod +x /opt/bitnami/letsencrypt/scripts/renew-certificate.sh
+```
+
+Enter the following content into the script and save it. Remember to replace the
+`DOMAIN` placeholder with your actual domain name, and the `EMAIL-ADDRESS`
+placeholder with your email address.
+```bash
+#!/bin/bash
+
+sudo /opt/bitnami/ctlscript.sh stop nginx
+sudo /opt/bitnami/letsencrypt/lego --tls --email="EMAIL-ADDRESS" --domains="DOMAIN" --path="/opt/bitnami/letsencrypt" renew --days 90
+sudo /opt/bitnami/ctlscript.sh start nginx
+```
+Execute the following command to open the crontab editor:
+```shell
+# @remote
+sudo crontab -e
+```
+Add the following lines to the crontab file and save it:
+```
+0 0 1 * * /opt/bitnami/letsencrypt/scripts/renew-certificate.sh 2> /dev/null
+```
+## 8. Snapshot the instance!
 You really don't want to have to redo all of the steps above, so this is a good
 moment to take a snapshot of your instance, so you can rollback to this exact
 point! Do you via the Lightsail dashboard.
