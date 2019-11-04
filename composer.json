@@ -55,12 +55,7 @@
   "extra": {
     "installer-paths": {
       "web/app/mu-plugins/{$name}/": [
-          "type:wordpress-muplugin",
-          "roots/wp-stage-switcher",
-          "wpackagist-plugin/custom-post-type-ui",
-          "wpackagist-plugin/advanced-custom-fields",
-          "wpackagist-plugin/disable-wordpress-updates"
-
+          "type:wordpress-muplugin"
       ],
       "web/app/plugins/{$name}/": ["type:wordpress-plugin"],
       "web/app/themes/{$name}/": ["type:wordpress-theme"]
