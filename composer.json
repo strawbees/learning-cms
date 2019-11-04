@@ -56,7 +56,7 @@
     "installer-paths": {
       "web/app/mu-plugins/{$name}/": [
           "type:wordpress-muplugin",
-          "wpackagist-plugin/advanced-custom-fields"
+          "wpackagist-plugin/disable-wordpress-updates"
       ],
       "web/app/plugins/{$name}/": ["type:wordpress-plugin"],
       "web/app/themes/{$name}/": ["type:wordpress-theme"]
