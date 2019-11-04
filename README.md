@@ -24,16 +24,82 @@ this server.
 |---------------------------------|----|-------------|---|
 |learning-cms-stage.strawbees.com.|A   |x.xxx.xxx.xxx|360|
 
-## 2. Copy the Bitnami password (used for MySQL)
-Since the Bitnami Ngnix image already has MySQL built in, you will need to grab
-the password, to use on the remote environment variables in order to connect to
-the database. To access the password, SSH into the server and type:
+## 2. Install dependencies
+#### Composer
+```shell
+# @remote
+# change to root
+sudo su
+php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
+```
+#### WP-CLI
+```shell
+# @remote
+# change to root
+sudo su
+curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+chmod +x wp-cli.phar
+mv wp-cli.phar /usr/local/bin/wp
+```
+
+## 3. Add bin paths to `/etc/environment`
+When our deploy system connects to the server via SSH, it will do it via a
+non-interactive shell, meaning that `~/.bashrc` or `~./.profile` won't be loaded
+and the $PATH variable is likely to not have the location of some important
+programs we need during deploy (php, composer, mysql, etc).
+
+To mitigate that, we will included some known paths into `/etc/environment`,
+since that will certainly be loaded.
+```shell
+# @remote
+# change to root
+sudo su
+vim /etc/environment
+```
+
+Replace this line:
+```
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/game"
+```
+With:
+```
+PATH="/opt/bitnami/varnish/bin:/opt/bitnami/sqlite/bin:/opt/bitnami/nginx/sbin:/opt/bitnami/php/bin:/opt/bitnami/mysql/bin:/opt/bitnami/common/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/game"
+```
+
+## 4. Setup a MySQL database and user
+Since the Bitnami Ngnix image already has MySQL built in, with a user (`root`)
+and a password (created when the machine is first instanced), you will need to
+first grab this password, so you can log into the server and create the user and
+the database that will be used by our application.
+
+To access the password, SSH into the server and type:
 ```shell
 cat bitnami_application_password
 ```
-Keep that password handy, you will need it later!
+With that password in hand (will refer to it as `BITNAMI_APPLICATION_PASSWORD`,
+in this document), let's connect to the database server:
+```shell
+# @remote
+# change to root
+sudo su
 
-## 3. Setup Authentication & Authorisation
+# connect to the server (note there is no space after '-p')
+mysql -u root -pBITNAMI_APPLICATION_PASSWORD
+```
+We know we are in the server, if now the command line is prefixed by `mysql>`.
+Now, we just type into the commands bellow to create the database and the user.
+We will create a database with the name `appdb`, a user with the name
+`appdbuser` and a secure password that should be generated (we will refer to it
+as `GENERATED_DB_PASSWORD`, keep it handy, since we will need to use it in the
+environment variables of the application):
+
+```sql
+create database appdb;
+create user 'appdbuser'@'localhost' identified by 'GENERATED_DB_PASSWORD';
+grant all privileges on appdb.* TO 'appdbuser'@'localhost';
+exit
+```
+## 5. Setup Authentication & Authorisation
 Good to read [this](https://capistranorb.com/documentation/getting-started/authentication-and-authorisation/)
 first, but I will try to summarise it here.
 
@@ -53,6 +119,8 @@ sudo su
 adduser deploy
 # disable the password
 passwd -l deploy
+# change to deploy
+su - deploy
 ```
 Now on your local machine. Assuming you have your own *private* SSH key pair
 already generated (if not follow the "1.1 SSH keys from workstation to servers",
@@ -67,7 +135,7 @@ Back in the remote instance, add your private key to the
 `~/.ssh/authorized_keys` file. You should do this for every developer.
 ```shell
 # @remote
-# switch to the deploy user
+# change to deploy
 su - deploy
 # create the .ssh folder
 cd ~
@@ -99,14 +167,14 @@ This can make getting user’s keys onto servers much easier, as you can simply
 `curl`/`wget` each user’s key into the authorised keys file on the server
 directly from Github!
 
-## 4. Prepare files on the server
+## 6. Prepare files on the server
 In the following instructions, we are assuming that the name of our app is
 `learning-cms`. We are also assuming the app domain will be
 `learning-cms-stage.strawbees.com` (in the `nginx-vhosts.conf`). If you are
 using these instructions for another app, change it accordingly (do a "search
 and replace")!
 
-### 4.1- Ngnix config
+### 6.1. Ngnix config
 Scaffold the app directories, with the correct permissions:
 ```shell
 # @remote
@@ -199,7 +267,7 @@ Restart Ngnix:
 # @remote
 sudo /opt/bitnami/ctlscript.sh restart nginx
 ```
-### 4.2. Prepare for Capistrano
+### 6.2. Prepare for Capistrano
 Since we already know we will use Capistrano for deployment, and which files it
 needs, create the `.env` file that will be consumed by Wordpress. Note that you
 will need the Bitnami Application password genreated at step 2. Also genereate
@@ -209,10 +277,10 @@ fresh salts at https://roots.io/salts
 # change user to deploy
 su - deploy
 mkdir /opt/bitnami/apps/learning-cms/htdocs/shared
-echo 'DB_NAME=wordpress
-DB_USER=root
-# database password is the same as the Bitnami application password
-DB_PASSWORD=BITNAMI_APPLICATION_PASSWORD
+echo 'DB_NAME=appdb
+DB_USER=appdbuser
+# database password generated at the step "Setup a MySQL database and user"
+DB_PASSWORD=GENERATED_DB_PASSWORD
 DB_PREFIX=wp_
 
 WP_ENV=development
@@ -230,12 +298,11 @@ LOGGED_IN_SALT=GENERATE_ME
 NONCE_SALT=GENERATE_ME
 ' > /opt/bitnami/apps/learning-cms/htdocs/shared/.env
 ```
-
-
-## 5. Snapshot the instance!
+## 7. Snapshot the instance!
 You really don't want to have to redo all of the steps above, so this is a good
 moment to take a snapshot of your instance, so you can rollback to this exact
 point! Do you via the Lightsail dashboard.
+
 # Local development
 
 # Deploying
@@ -244,3 +311,10 @@ point! Do you via the Lightsail dashboard.
     * https://bundler.io/ (require sudo, a bit painful to install)
 * PHP >= 7.1
 * Composer - [Install](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
+
+#### Push to git
+The server will fetch the application from git, so make sure all changes are pushed!
+#### Run Capistrano
+```shell
+bundle exec cap staging deploy
+```
