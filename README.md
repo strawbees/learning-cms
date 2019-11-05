@@ -286,6 +286,9 @@ WP_ENV=development
 WP_HOME=https://learning-cms-stage.strawbees.com
 WP_SITEURL=${WP_HOME}/wp
 
+# wordpress plugins
+PLUGIN_ACF_KEY=YOUR_KEY
+
 # generate at https://roots.io/salts.html
 AUTH_KEY=GENERATE_ME
 SECURE_AUTH_KEY=GENERATE_ME
@@ -397,6 +400,33 @@ moment to take a snapshot of your instance, so you can rollback to this exact
 point! Do you via the Lightsail dashboard.
 
 # Local development
+## Dependencies
+* Docker
+* Lando (https://lando.dev/)
+
+## 1. Create `.env`
+```
+DB_NAME=wordpres
+DB_USER=wordpress
+DB_PASSWORD=wordpress
+DB_HOST=database
+DB_PREFIX=wp_
+
+WP_ENV=development
+WP_HOME=http://learning-cms.lndo.site
+WP_SITEURL=${WP_HOME}/wp
+```
+## 2. Using Lando
+To start the server:
+```shell
+lando start
+```
+The website will be avaiable at `http://learning-cms.lndo.site`
+
+To stop:
+```shell
+lando stop
+```
 
 # Deploying
 ## Local machine requirements
@@ -411,3 +441,5 @@ The server will fetch the application from git, so make sure all changes are pus
 ```shell
 bundle exec cap staging deploy
 ```
+## CI
+Add key to appveyor https://www.appveyor.com/docs/how-to/private-git-sub-modules/
