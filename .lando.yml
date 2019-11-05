@@ -1,0 +1,9 @@
+name: learning-cms
+recipe: wordpress
+proxy:
+config:
+  php: '7.2'
+  via: nginx
+  webroot: web
+  database: mariadb
+  xdebug: true
