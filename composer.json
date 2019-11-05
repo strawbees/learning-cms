@@ -18,7 +18,7 @@
         "type": "wordpress-plugin",
         "dist": {
           "type": "zip",
-          "url": "https://connect.advancedcustomfields.com/index.php?p=pro&a=download&k={%PLUGIN_ACF_KEY}&t={%version}"
+          "url": "https://connect.advancedcustomfields.com/index.php?p=pro&a=download&k={%PLUGIN_ACF_KEY}&t={%VERSION}"
         },
         "require": {
           "composer/installers": "^1.4",
@@ -35,7 +35,7 @@
     "roots/wp-config": "1.0.0",
     "roots/wp-password-bcrypt": "1.0.0",
     "vlucas/phpdotenv": "^3.4.0",
-    "wpackagist-plugin/advanced-custom-fields": "5.8.6",
+    "advanced-custom-fields/advanced-custom-fields-pro": "*",
     "wpackagist-plugin/custom-post-type-ui": "1.6.2",
     "wpackagist-plugin/disable-wordpress-updates": "1.6.6",
     "wpackagist-plugin/wp-mail-smtp": "^1.7",
@@ -56,6 +56,7 @@
     "installer-paths": {
       "web/app/mu-plugins/{$name}/": [
           "type:wordpress-muplugin",
+          "advanced-custom-fields/advanced-custom-fields-pro",
           "wpackagist-plugin/disable-wordpress-updates"
       ],
       "web/app/plugins/{$name}/": ["type:wordpress-plugin"],
