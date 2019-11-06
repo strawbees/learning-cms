@@ -18,6 +18,19 @@ set :linked_files, fetch(:linked_files, []).push('.env')
 set :linked_dirs, fetch(:linked_dirs, []).push('web/app/uploads')
 
 namespace :deploy do
+  desc 'Change permissions'
+  task :change_permissions do
+    on roles(:app) do
+      within fetch(:release_path) do
+        execute :chmod, '777', 'web/app/cache'
+        execute :chmod, '777', 'web/app/w3tc-config'
+      end
+    end
+  end
+end
+after 'deploy:publishing', 'deploy:change_permissions'
+
+namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
