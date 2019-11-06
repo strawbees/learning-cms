@@ -10,6 +10,11 @@ web/app/upgrade
 web/app/uploads/*
 !web/app/uploads/.gitkeep
 
+# W3 Total Cache plugin
+web/app/cache
+web/app/w3tc-config
+web/nginx.conf
+
 # WordPress
 web/wp
 web/.htaccess
@@ -24,6 +29,8 @@ web/.htaccess
 
 # Composer
 /vendor
+
+
 
 # WP-CLI
 wp-cli.local.yml

@@ -8,7 +8,9 @@ Author:      Strawbees
 // add parsed blocks to api response
 function sb_html_to_obj( $html ) {
 	$dom = new DOMDocument();
+	libxml_use_internal_errors(true);
 	$dom->loadHTML( $html );
+	libxml_clear_errors();
 	return sb_element_to_obj( $dom->documentElement );
 }
 function sb_element_to_obj( $element ) {
