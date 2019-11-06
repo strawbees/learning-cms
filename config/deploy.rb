@@ -21,15 +21,11 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      # Your restart mechanism here, for example:
-      #execute :service, :nginx, :reload
+      sudo '/opt/bitnami/ctlscript.sh', 'restart', 'nginx'
     end
   end
 end
-
-# The above restart task is not run by default
-# Uncomment the following line to run it on deploys if needed
-# after 'deploy:publishing', 'deploy:restart'
+after 'deploy:publishing', 'deploy:restart'
 
 namespace :deploy do
   desc 'Update WordPress template root paths to point to the new release'
