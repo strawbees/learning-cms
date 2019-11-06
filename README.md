@@ -225,6 +225,8 @@ location ~ \.php$ {
   fastcgi_param  SCRIPT_FILENAME $request_filename;
   include fastcgi_params;
 }
+
+include /opt/bitnami/apps/learning-cms/htdocs/current/web/nginx[.]conf;
 ' > /opt/bitnami/apps/learning-cms/conf/nginx-app.conf
 
 # nginx-vhosts.conf (https commented out for now)
