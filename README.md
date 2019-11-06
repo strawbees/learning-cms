@@ -121,6 +121,22 @@ passwd -l deploy
 # change to deploy
 su - deploy
 ```
+Since the deploy user will need to be able to restart the server, we need to
+add it to the "sudoers", so it can it can user `sudo` to run the restart
+script.
+
+To do that, you first open the sudoers file:
+```shell
+# @remote
+# change to root
+sudo su
+# open sudoers
+export VISUAL=vim; visudo
+```
+And add the following line:
+```
+deploy ALL=(ALL:ALL) NOPASSWD: /opt/bitnami/ctlscript.sh
+```
 Now on your local machine. Assuming you have your own *private* SSH key pair
 already generated (if not follow the "1.1 SSH keys from workstation to servers",
 on the link above), then copy the *public* key to your clipboard:
