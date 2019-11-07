@@ -28,6 +28,8 @@ namespace :deploy do
         sudo 'chmod', '775', 'web'
         sudo 'chmod', '640', 'web/index.php'
         sudo 'chmod', '640', 'web/wp-config.php'
+        sudo 'chmod', '-f', '777', 'web/app/cache', '||', 'true'
+        sudo 'chmod', '-f', '777', 'web/app/w3tc-config', '||', 'true'
       end
     end
   end
