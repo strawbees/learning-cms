@@ -39,6 +39,7 @@ namespace :deploy do
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       sudo '/opt/bitnami/ctlscript.sh', 'restart', 'nginx'
+      sudo '/opt/bitnami/ctlscript.sh', 'restart', 'php-fpm'
     end
   end
 end
