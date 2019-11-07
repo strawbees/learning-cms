@@ -1,5 +1,7 @@
 set :stage, :production
 
+set :branch, ENV.fetch('REVISION', 'master')
+
 # Simple Role Syntax
 # ==================
 #role :app, %w{deploy@example.com}

@@ -4,7 +4,7 @@ set :repo_url, 'https://github.com/strawbees/learning-cms.git'
 # Branch options
 # Prompts for the branch name (defaults to current branch)
 #ask :branch, -> { `git rev-parse --abbrev-ref HEAD`.chomp }
-set :branch, ENV.fetch('REVISION', -> { `git rev-parse --abbrev-ref HEAD`.chomp })
+set :branch, ENV.fetch('REVISION', 'master')
 
 set :deploy_to, -> { "/opt/bitnami/apps/#{fetch(:application)}/htdocs" }
 
