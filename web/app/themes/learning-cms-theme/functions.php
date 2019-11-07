@@ -1,14 +1,4 @@
 <?php
-// Full width editor
-// add_action( 'admin_head', 'editor_full_width_gutenberg' );
-// function editor_full_width_gutenberg() {
-// 	echo '<style>
-// 		body.gutenberg-editor-page .editor-post-title__block, body.gutenberg-editor-page .editor-default-block-appender, body.gutenberg-editor-page .editor-block-list__block,
-// 		.block-editor__container .wp-block {
-// 			max-width: none !important;
-// 		}
-// 	</style>';
-// }
 // Theme supports
 add_theme_support( 'align-wide' );
 add_theme_support( 'disable-custom-font-sizes' );
