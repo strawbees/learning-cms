@@ -39,6 +39,9 @@ if (file_exists($root_dir . '/.env')) {
  */
 define('WP_ENV', env('WP_ENV') ?: 'production');
 
+/** Enable W3 Total Cache */
+define('WP_CACHE', env('WP_CACHE'));
+
 /**
  * URLs
  */
