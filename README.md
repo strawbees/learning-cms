@@ -321,6 +321,7 @@ LOGGED_IN_SALT=GENERATE_ME
 NONCE_SALT=GENERATE_ME
 ' > /opt/bitnami/apps/learning-cms/htdocs/shared/.env
 ```
+
 ## 7. SSL Certificates
 Boiled down from [Bitnami's guide](https://docs.bitnami.com/aws/apps/mattermost/administration/generate-configure-certificate-letsencrypt/). Maybe a good idea to check that link too!
 
@@ -420,6 +421,17 @@ You really don't want to have to redo all of the steps above, so this is a good
 moment to take a snapshot of your instance, so you can rollback to this exact
 point! Do you via the Lightsail dashboard.
 
+# Managing Wordpress
+
+## W3 Total Cache plugin
+If you are using W3 Total Cache plugin, you will also need to set the var
+`WP_CACHE=true` on the `.env` file. If you disable the plugin, set `WP_CACHE=`
+(empty).
+
+Usually the plugin does that by itself by directly modifying `wp-config.php`,
+but since we hardened the permissions (done during the Capistrano deploy), the
+plugin won't be able to do that.
+
 # Local development
 ## Dependencies
 * Docker
@@ -437,6 +449,9 @@ WP_ENV=development
 WP_HOME=http://learning-cms.lndo.site
 WP_SITEURL=${WP_HOME}/wp
 ```
+*NOTE*: If you are using W3 Total Cache plugin, you will also need to set the
+var `WP_CACHE=true` on the `.env` file.
+
 ## 2. Using Lando
 To start the server:
 ```shell
@@ -450,17 +465,18 @@ lando stop
 ```
 
 # Deploying
-## Local machine requirements
+## From local machine
+### Requirements
 * Ruby
     * https://bundler.io/ (require sudo, a bit painful to install)
 * PHP >= 7.1
 * Composer - [Install](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
 
-#### Push to git
+### 1. Push to git
 The server will fetch the application from git, so make sure all changes are pushed!
-#### Run Capistrano
+### 2. Run Capistrano
 ```shell
 bundle exec cap staging deploy
 ```
-## CI
+## From CI
 Add key to appveyor https://www.appveyor.com/docs/how-to/private-git-sub-modules/
