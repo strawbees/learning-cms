@@ -64,7 +64,6 @@
           "wpackagist-plugin/custom-post-type-ui",
           "wpackagist-plugin/disable-wordpress-updates",
           "wpackagist-plugin/gutenberg",
-          "wpackagist-plugin/w3-total-cache",
           "wpackagist-plugin/wp-api-menus",
           "wpackagist-plugin/wp-mail-smtp"
       ],
