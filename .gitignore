@@ -11,6 +11,7 @@ web/app/uploads/*
 !web/app/uploads/.gitkeep
 
 # W3 Total Cache plugin
+web/nginx.conf
 web/app/cache/*
 !web/app/cache/.gitkeep
 web/app/w3tc-config/*
