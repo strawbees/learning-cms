@@ -22,8 +22,12 @@ namespace :deploy do
   task :change_permissions do
     on roles(:app) do
       within fetch(:release_path) do
-        execute :chmod, '777', 'web/app/cache'
-        execute :chmod, '777', 'web/app/w3tc-config'
+        sudo 'find', '.', '-exec', 'chown', 'deploy:daemon', '{}', '\\;'
+        sudo 'find', '.', '-type', 'd', '-exec', 'chmod', '755', '{}', '\\;'
+        sudo 'find', '.', '-type', 'f', '-exec', 'chmod', '644', '{}', '\\;'
+        sudo 'chmod', '775', 'web'
+        sudo 'chmod', '640', 'web/index.php'
+        sudo 'chmod', '640', 'web/wp-config.php'
       end
     end
   end
