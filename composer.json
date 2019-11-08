@@ -11,6 +11,18 @@
       "url": "https://wpackagist.org"
     },
     {
+      "type": "vcs",
+      "url": "https://github.com/wp-graphql/wp-graphql"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/wp-graphql/wp-graphiql"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/wp-graphql/wp-graphql-acf"
+    },
+    {
       "type": "package",
       "package": {
         "name": "advanced-custom-fields/advanced-custom-fields-pro",
@@ -36,7 +48,9 @@
     "roots/wp-config": "1.0.0",
     "roots/wp-password-bcrypt": "1.0.0",
     "vlucas/phpdotenv": "^3.4.0",
-    "wpackagist-plugin/acf-role-selector-field": "^3.0",
+    "wp-graphql/wp-graphiql": "^1.0",
+    "wp-graphql/wp-graphql": "^0.4.0",
+    "wp-graphql/wp-graphql-acf": "dev-release/v0.3.0",
     "wpackagist-plugin/acf-to-rest-api": "^3.1",
     "wpackagist-plugin/custom-post-type-ui": "1.6.2",
     "wpackagist-plugin/disable-wordpress-updates": "1.6.6",
@@ -61,11 +75,11 @@
       "web/app/mu-plugins/{$name}/": [
           "type:wordpress-muplugin",
           "advanced-custom-fields/advanced-custom-fields-pro",
-          "wpackagist-plugin/acf-role-selector-field",
           "wpackagist-plugin/acf-to-rest-api",
           "wpackagist-plugin/custom-post-type-ui",
           "wpackagist-plugin/disable-wordpress-updates",
           "wpackagist-plugin/gutenberg",
+          "wpackagist-plugin/jwt-authentication-for-wp-rest-api",
           "wpackagist-plugin/wp-api-menus",
           "wpackagist-plugin/wp-mail-smtp"
       ],
