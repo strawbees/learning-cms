@@ -30,6 +30,7 @@ namespace :deploy do
         sudo 'chmod', '640', 'web/wp-config.php'
         sudo 'chmod', '-f', '777', 'web/app/cache', '||', 'true'
         sudo 'chmod', '-f', '777', 'web/app/w3tc-config', '||', 'true'
+        sudo 'chmod', '-f', '775', 'web/app/themes/learning-cms-theme/acf-json', '||', 'true'
       end
     end
   end
