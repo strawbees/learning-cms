@@ -17,6 +17,9 @@ require_once 'inc/frontend-origin.php';
 // ACF commands.
 require_once 'inc/class-acf-commands.php';
 
+// Content Blocks in API
+require_once 'inc/content-blocks-in-api.php';
+
 // Logging functions.
 require_once 'inc/log.php';
 
