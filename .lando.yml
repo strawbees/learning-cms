@@ -1,9 +1,16 @@
 name: learning-cms
 recipe: wordpress
-proxy:
 config:
   php: '7.2'
   via: nginx
   webroot: web
   database: mariadb
   xdebug: true
+proxy:
+  pma:
+    - db.learning-cms.lndo.site
+services:
+  pma:
+    type: phpmyadmin
+    hosts:
+      - database
