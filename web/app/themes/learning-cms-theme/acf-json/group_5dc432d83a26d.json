@@ -89,7 +89,7 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "show_in_graphql": 0,
+    "show_in_graphql": 1,
     "graphql_field_name": "og",
-    "modified": 1573216326
+    "modified": 1573230961
 }
