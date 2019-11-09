@@ -23,6 +23,10 @@
       "url": "https://github.com/wp-graphql/wp-graphql-acf"
     },
     {
+      "type": "vcs",
+      "url": "https://github.com/pristas-peter/wp-graphql-gutenberg"
+    },
+    {
       "type": "package",
       "package": {
         "name": "advanced-custom-fields/advanced-custom-fields-pro",
@@ -40,10 +44,11 @@
     }
   ],
   "require": {
-    "php": ">=7.1",
     "advanced-custom-fields/advanced-custom-fields-pro": "*",
     "composer/installers": "^1.7",
     "oscarotero/env": "^1.2.0",
+    "php": ">=7.1",
+    "pristas-peter/wp-graphql-gutenberg": "^0.1.0",
     "roots/wordpress": "5.2.4",
     "roots/wp-config": "1.0.0",
     "roots/wp-password-bcrypt": "1.0.0",

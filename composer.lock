@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f4668690660c5f951400547781211a8c",
+    "content-hash": "57af083d7e561d15a66afa4c74243d4b",
     "packages": [
         {
             "name": "advanced-custom-fields/advanced-custom-fields-pro",
@@ -329,6 +329,28 @@
                 "type"
             ],
             "time": "2019-11-06T22:27:00+00:00"
+        },
+        {
+            "name": "pristas-peter/wp-graphql-gutenberg",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pristas-peter/wp-graphql-gutenberg.git",
+                "reference": "603d38c2fd07f1036aeaba75f9e762449ae5a75b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pristas-peter/wp-graphql-gutenberg/zipball/603d38c2fd07f1036aeaba75f9e762449ae5a75b",
+                "reference": "603d38c2fd07f1036aeaba75f9e762449ae5a75b",
+                "shasum": ""
+            },
+            "type": "wordpress-plugin",
+            "description": "Query gutenberg blocks with wp-graphql",
+            "support": {
+                "source": "https://github.com/pristas-peter/wp-graphql-gutenberg/tree/0.1.0",
+                "issues": "https://github.com/pristas-peter/wp-graphql-gutenberg/issues"
+            },
+            "time": "2019-10-30T19:23:21+00:00"
         },
         {
             "name": "roots/wordpress",
