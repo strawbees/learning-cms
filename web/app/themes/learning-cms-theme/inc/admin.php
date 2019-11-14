@@ -41,7 +41,7 @@ function set_headless_preview_link( $link ) {
 	if ( 0 === $parent_id ) {
 		$status = 'draft';
 	}
-	return "$frontend/_preview/$parent_id/$revision_id/$type/$status/$nonce";
+	return "$frontend/_preview/?parentId=$parent_id&revisionId=$revision_id&type$type&status=$status&nonce=$nonce";
 }
 
 add_filter( 'preview_post_link', 'set_headless_preview_link' );

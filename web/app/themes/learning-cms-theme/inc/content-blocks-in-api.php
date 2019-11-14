@@ -67,7 +67,8 @@ add_action( 'rest_api_init', function () {
 				if (isset( $post ) &&
 					isset( $post['content'] ) &&
 					isset( $post['content']['raw'] )) {
-					return sb_clean_blocks( parse_blocks( $post['content']['raw'] ) );
+					// return sb_clean_blocks( parse_blocks( $post['content']['raw'] ) );
+					return parse_blocks( $post['content']['raw'] );
 				}
 				return array();
 			},

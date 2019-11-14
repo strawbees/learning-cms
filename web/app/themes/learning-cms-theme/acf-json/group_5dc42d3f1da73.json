@@ -18,7 +18,7 @@
             "show_in_graphql": 1,
             "message": "",
             "default_value": 0,
-            "ui": 0,
+            "ui": 1,
             "ui_on_text": "",
             "ui_off_text": ""
         },
@@ -26,7 +26,7 @@
             "key": "field_5dc42d55cec05",
             "label": "ACL Roles",
             "name": "acl_roles",
-            "type": "checkbox",
+            "type": "select",
             "instructions": "Which roles can access this page",
             "required": 0,
             "conditional_logic": 0,
@@ -43,12 +43,13 @@
                 "contributor": "Contributor",
                 "subscriber": "Subscriber"
             },
-            "allow_custom": 0,
             "default_value": [],
-            "layout": "vertical",
-            "toggle": 0,
+            "allow_null": 0,
+            "multiple": 1,
+            "ui": 1,
+            "ajax": 0,
             "return_format": "value",
-            "save_custom": 0
+            "placeholder": ""
         }
     ],
     "location": [
@@ -77,5 +78,5 @@
     "description": "",
     "show_in_graphql": 1,
     "graphql_field_name": "acl",
-    "modified": 1573231200
+    "modified": 1573676210
 }

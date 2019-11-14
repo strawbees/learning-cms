@@ -4,7 +4,6 @@
  *
  * @package  Learning CMS
  */
-
 // Redirect individual posts to the REST API endpoint.
 if ( is_singular() ) {
 	header(

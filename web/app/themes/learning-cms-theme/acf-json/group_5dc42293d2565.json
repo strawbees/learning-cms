@@ -3,11 +3,11 @@
     "title": "Configuration",
     "fields": [
         {
-            "key": "field_5dc4229c453cc",
-            "label": "Frontend URL",
-            "name": "frontend_url",
+            "key": "field_5dc7dd652884a",
+            "label": "Base URL",
+            "name": "base_url",
             "type": "url",
-            "instructions": "",
+            "instructions": "The URL that the CMS is served from. We will use this to be able to make the links relative and to replaced it with the CDN URL",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -34,6 +34,47 @@
             },
             "default_value": "",
             "placeholder": ""
+        },
+        {
+            "key": "field_5dc4229c453cc",
+            "label": "Frontend URL",
+            "name": "frontend_url",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "show_in_graphql": 1,
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_5dc7516d2224c",
+            "label": "Home Page",
+            "name": "home_page",
+            "type": "relationship",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "show_in_graphql": 1,
+            "post_type": [
+                "page"
+            ],
+            "taxonomy": "",
+            "filters": "",
+            "elements": "",
+            "min": 1,
+            "max": 1,
+            "return_format": "object"
         },
         {
             "key": "field_5dc72700c38c8",
@@ -144,5 +185,5 @@
     "description": "",
     "show_in_graphql": 1,
     "graphql_field_name": "configuration",
-    "modified": 1573333235
+    "modified": 1573676564
 }
