@@ -2,6 +2,13 @@ set :stage, :staging
 
 set :branch, ENV.fetch('REVISION', 'develop')
 
+# WP CLI
+# ======
+set :wpcli_remote_url, 'https://learning-cms-stage.strawbees.com'
+set :wpcli_local_url, 'http://learning-cms.lndo.site'
+set :wpcli_backup_db, true
+
+
 # Simple Role Syntax
 # ==================
 #role :app, %w{deploy@example.com}
