@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "57af083d7e561d15a66afa4c74243d4b",
+    "content-hash": "0913da30346772baa997f6f163e9aa1b",
     "packages": [
         {
             "name": "advanced-custom-fields/advanced-custom-fields-pro",
@@ -331,39 +331,17 @@
             "time": "2019-11-06T22:27:00+00:00"
         },
         {
-            "name": "pristas-peter/wp-graphql-gutenberg",
-            "version": "0.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pristas-peter/wp-graphql-gutenberg.git",
-                "reference": "603d38c2fd07f1036aeaba75f9e762449ae5a75b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pristas-peter/wp-graphql-gutenberg/zipball/603d38c2fd07f1036aeaba75f9e762449ae5a75b",
-                "reference": "603d38c2fd07f1036aeaba75f9e762449ae5a75b",
-                "shasum": ""
-            },
-            "type": "wordpress-plugin",
-            "description": "Query gutenberg blocks with wp-graphql",
-            "support": {
-                "source": "https://github.com/pristas-peter/wp-graphql-gutenberg/tree/0.1.0",
-                "issues": "https://github.com/pristas-peter/wp-graphql-gutenberg/issues"
-            },
-            "time": "2019-10-30T19:23:21+00:00"
-        },
-        {
             "name": "roots/wordpress",
-            "version": "5.2.4",
+            "version": "5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WordPress/WordPress.git",
-                "reference": "5.2.4"
+                "reference": "5.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WordPress/WordPress/zipball/5.2.4",
-                "reference": "5.2.4"
+                "url": "https://api.github.com/repos/WordPress/WordPress/zipball/5.3",
+                "reference": "5.3"
             },
             "require": {
                 "php": ">=5.3.2",
@@ -387,7 +365,7 @@
                 "cms",
                 "wordpress"
             ],
-            "time": "2019-10-14T20:28:22+00:00"
+            "time": "2019-11-12T20:34:22+00:00"
         },
         {
             "name": "roots/wordpress-core-installer",
@@ -809,16 +787,16 @@
         },
         {
             "name": "wp-graphql/wp-graphql-acf",
-            "version": "dev-release/v0.3.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-graphql/wp-graphql-acf.git",
-                "reference": "6003c8375424b5d13114e6a1bd7cda2ff79fd527"
+                "reference": "bcc8e42b5e0fde745404dc9915534e6b2d0c38cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-graphql/wp-graphql-acf/zipball/6003c8375424b5d13114e6a1bd7cda2ff79fd527",
-                "reference": "6003c8375424b5d13114e6a1bd7cda2ff79fd527",
+                "url": "https://api.github.com/repos/wp-graphql/wp-graphql-acf/zipball/bcc8e42b5e0fde745404dc9915534e6b2d0c38cb",
+                "reference": "bcc8e42b5e0fde745404dc9915534e6b2d0c38cb",
                 "shasum": ""
             },
             "require-dev": {
@@ -861,76 +839,22 @@
             ],
             "description": "Advanced Custom Fields bindings for wp-graphql",
             "support": {
-                "source": "https://github.com/wp-graphql/wp-graphql-acf/tree/release/v0.3.0",
+                "source": "https://github.com/wp-graphql/wp-graphql-acf/tree/develop",
                 "issues": "https://github.com/wp-graphql/wp-graphql-acf/issues"
             },
-            "time": "2019-10-25T05:49:06+00:00"
-        },
-        {
-            "name": "wpackagist-plugin/acf-to-rest-api",
-            "version": "3.1.0",
-            "source": {
-                "type": "svn",
-                "url": "https://plugins.svn.wordpress.org/acf-to-rest-api/",
-                "reference": "tags/3.1.0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/acf-to-rest-api.3.1.0.zip"
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "https://wordpress.org/plugins/acf-to-rest-api/"
-        },
-        {
-            "name": "wpackagist-plugin/custom-post-type-ui",
-            "version": "1.6.2",
-            "source": {
-                "type": "svn",
-                "url": "https://plugins.svn.wordpress.org/custom-post-type-ui/",
-                "reference": "tags/1.6.2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/custom-post-type-ui.1.6.2.zip"
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "https://wordpress.org/plugins/custom-post-type-ui/"
-        },
-        {
-            "name": "wpackagist-plugin/disable-wordpress-updates",
-            "version": "1.6.6",
-            "source": {
-                "type": "svn",
-                "url": "https://plugins.svn.wordpress.org/disable-wordpress-updates/",
-                "reference": "tags/1.6.6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/disable-wordpress-updates.1.6.6.zip"
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "https://wordpress.org/plugins/disable-wordpress-updates/"
+            "time": "2019-10-29T17:08:27+00:00"
         },
         {
             "name": "wpackagist-plugin/gutenberg",
-            "version": "6.8.0",
+            "version": "6.9.0",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/gutenberg/",
-                "reference": "tags/6.8.0"
+                "reference": "tags/6.9.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/gutenberg.6.8.0.zip"
+                "url": "https://downloads.wordpress.org/plugin/gutenberg.6.9.0.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -940,15 +864,15 @@
         },
         {
             "name": "wpackagist-plugin/w3-total-cache",
-            "version": "0.10.1",
+            "version": "0.10.2",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/w3-total-cache/",
-                "reference": "tags/0.10.1"
+                "reference": "tags/0.10.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/w3-total-cache.0.10.1.zip"
+                "url": "https://downloads.wordpress.org/plugin/w3-total-cache.0.10.2.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -957,34 +881,16 @@
             "homepage": "https://wordpress.org/plugins/w3-total-cache/"
         },
         {
-            "name": "wpackagist-plugin/wp-api-menus",
-            "version": "1.3.1",
-            "source": {
-                "type": "svn",
-                "url": "https://plugins.svn.wordpress.org/wp-api-menus/",
-                "reference": "trunk"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wp-api-menus.zip?timestamp=1475510483"
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "https://wordpress.org/plugins/wp-api-menus/"
-        },
-        {
             "name": "wpackagist-plugin/wp-mail-smtp",
-            "version": "1.7.0",
+            "version": "1.7.1",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/wp-mail-smtp/",
-                "reference": "tags/1.7.0"
+                "reference": "tags/1.7.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wp-mail-smtp.1.7.0.zip"
+                "url": "https://downloads.wordpress.org/plugin/wp-mail-smtp.1.7.1.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -1000,12 +906,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "15eb463aecc9e315b89b744ee0feb0bb1b4c6787"
+                "reference": "e3e6456e753326a096303e96b0f759fe789e63e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/15eb463aecc9e315b89b744ee0feb0bb1b4c6787",
-                "reference": "15eb463aecc9e315b89b744ee0feb0bb1b4c6787",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/e3e6456e753326a096303e96b0f759fe789e63e8",
+                "reference": "e3e6456e753326a096303e96b0f759fe789e63e8",
                 "shasum": ""
             },
             "conflict": {
@@ -1122,13 +1028,14 @@
                 "sylius/grid": ">=1,<1.1.19|>=1.2,<1.2.18|>=1.3,<1.3.13|>=1.4,<1.4.5|>=1.5,<1.5.1",
                 "sylius/grid-bundle": ">=1,<1.1.19|>=1.2,<1.2.18|>=1.3,<1.3.13|>=1.4,<1.4.5|>=1.5,<1.5.1",
                 "sylius/sylius": ">=1,<1.1.18|>=1.2,<1.2.17|>=1.3,<1.3.12|>=1.4,<1.4.4",
-                "symfony/cache": ">=3.1,<3.4.26|>=4,<4.1.12|>=4.2,<4.2.7",
+                "symfony/cache": ">=3.1,<3.4.35|>=4,<4.2.12|>=4.3,<4.3.8",
                 "symfony/dependency-injection": ">=2,<2.0.17|>=2.7,<2.7.51|>=2.8,<2.8.50|>=3,<3.4.26|>=4,<4.1.12|>=4.2,<4.2.7",
                 "symfony/form": ">=2.3,<2.3.35|>=2.4,<2.6.12|>=2.7,<2.7.50|>=2.8,<2.8.49|>=3,<3.4.20|>=4,<4.0.15|>=4.1,<4.1.9|>=4.2,<4.2.1",
                 "symfony/framework-bundle": ">=2,<2.3.18|>=2.4,<2.4.8|>=2.5,<2.5.2|>=2.7,<2.7.51|>=2.8,<2.8.50|>=3,<3.4.26|>=4,<4.1.12|>=4.2,<4.2.7",
-                "symfony/http-foundation": ">=2,<2.7.51|>=2.8,<2.8.50|>=3,<3.4.26|>=4,<4.1.12|>=4.2,<4.2.7",
-                "symfony/http-kernel": ">=2,<2.3.29|>=2.4,<2.5.12|>=2.6,<2.6.8",
+                "symfony/http-foundation": ">=2,<2.8.52|>=3,<3.4.35|>=4,<4.2.12|>=4.3,<4.3.8",
+                "symfony/http-kernel": ">=2,<2.8.52|>=3,<3.4.35|>=4,<4.2.12|>=4.3,<4.3.8",
                 "symfony/intl": ">=2.7,<2.7.38|>=2.8,<2.8.31|>=3,<3.2.14|>=3.3,<3.3.13",
+                "symfony/mime": ">=4.3,<4.3.8",
                 "symfony/phpunit-bridge": ">=2.8,<2.8.50|>=3,<3.4.26|>=4,<4.1.12|>=4.2,<4.2.7",
                 "symfony/polyfill": ">=1,<1.10",
                 "symfony/polyfill-php55": ">=1,<1.10",
@@ -1139,11 +1046,12 @@
                 "symfony/security-core": ">=2.4,<2.6.13|>=2.7,<2.7.9|>=2.7.30,<2.7.32|>=2.8,<2.8.37|>=3,<3.3.17|>=3.4,<3.4.7|>=4,<4.0.7",
                 "symfony/security-csrf": ">=2.4,<2.7.48|>=2.8,<2.8.41|>=3,<3.3.17|>=3.4,<3.4.11|>=4,<4.0.11",
                 "symfony/security-guard": ">=2.8,<2.8.41|>=3,<3.3.17|>=3.4,<3.4.11|>=4,<4.0.11",
-                "symfony/security-http": ">=2.3,<2.3.41|>=2.4,<2.7.51|>=2.8,<2.8.50|>=3,<3.4.26|>=4,<4.1.12|>=4.2,<4.2.7",
+                "symfony/security-http": ">=2.3,<2.3.41|>=2.4,<2.7.51|>=2.8,<2.8.50|>=3,<3.4.26|>=4,<4.2.12|>=4.3,<4.3.8",
                 "symfony/serializer": ">=2,<2.0.11",
                 "symfony/symfony": ">=2,<2.7.51|>=2.8,<2.8.50|>=3,<3.4.26|>=4,<4.1.12|>=4.2,<4.2.7",
                 "symfony/translation": ">=2,<2.0.17",
                 "symfony/validator": ">=2,<2.0.24|>=2.1,<2.1.12|>=2.2,<2.2.5|>=2.3,<2.3.3",
+                "symfony/var-exporter": ">=4.2,<4.2.12|>=4.3,<4.3.8",
                 "symfony/web-profiler-bundle": ">=2,<2.3.19|>=2.4,<2.4.9|>=2.5,<2.5.4",
                 "symfony/yaml": ">=2,<2.0.22|>=2.1,<2.1.7",
                 "tecnickcom/tcpdf": "<6.2.22",
@@ -1208,7 +1116,7 @@
                 }
             ],
             "description": "Prevents installation of composer packages with known security vulnerabilities: no API, simply require it",
-            "time": "2019-11-07T10:12:47+00:00"
+            "time": "2019-11-13T10:25:51+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",

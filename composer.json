@@ -48,20 +48,15 @@
     "composer/installers": "^1.7",
     "oscarotero/env": "^1.2.0",
     "php": ">=7.1",
-    "pristas-peter/wp-graphql-gutenberg": "^0.1.0",
-    "roots/wordpress": "5.2.4",
+    "roots/wordpress": "^5.3.0",
     "roots/wp-config": "1.0.0",
     "roots/wp-password-bcrypt": "1.0.0",
     "vlucas/phpdotenv": "^3.4.0",
     "wp-graphql/wp-graphiql": "^1.0",
     "wp-graphql/wp-graphql": "^0.4.0",
-    "wp-graphql/wp-graphql-acf": "dev-release/v0.3.0",
-    "wpackagist-plugin/acf-to-rest-api": "^3.1",
-    "wpackagist-plugin/custom-post-type-ui": "1.6.2",
-    "wpackagist-plugin/disable-wordpress-updates": "1.6.6",
+    "wp-graphql/wp-graphql-acf": "dev-master",
     "wpackagist-plugin/gutenberg": "^6.8",
     "wpackagist-plugin/w3-total-cache": "^0.10.1",
-    "wpackagist-plugin/wp-api-menus": "^1.3",
     "wpackagist-plugin/wp-mail-smtp": "^1.7"
   },
   "require-dev": {
@@ -78,15 +73,7 @@
   "extra": {
     "installer-paths": {
       "web/app/mu-plugins/{$name}/": [
-          "type:wordpress-muplugin",
-          "advanced-custom-fields/advanced-custom-fields-pro",
-          "wpackagist-plugin/acf-to-rest-api",
-          "wpackagist-plugin/custom-post-type-ui",
-          "wpackagist-plugin/disable-wordpress-updates",
-          "wpackagist-plugin/gutenberg",
-          "wpackagist-plugin/jwt-authentication-for-wp-rest-api",
-          "wpackagist-plugin/wp-api-menus",
-          "wpackagist-plugin/wp-mail-smtp"
+          "type:wordpress-muplugin"
       ],
       "web/app/plugins/{$name}/": ["type:wordpress-plugin"],
       "web/app/themes/{$name}/": ["type:wordpress-theme"]
