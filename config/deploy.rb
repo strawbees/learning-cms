@@ -22,7 +22,7 @@ namespace :deploy do
   task :change_permissions do
     on roles(:app) do
       within fetch(:release_path) do
-        sudo 'find', '.', '-exec', 'chown', 'deploy:daemon', '{}', '\\;'
+        sudo 'find', '-L', '.', '-exec', 'chown', 'deploy:daemon', '{}', '\\;'
         sudo 'find', '.', '-type', 'd', '-exec', 'chmod', '755', '{}', '\\;'
         sudo 'find', '.', '-type', 'f', '-exec', 'chmod', '644', '{}', '\\;'
         sudo 'chmod', '775', 'web'
