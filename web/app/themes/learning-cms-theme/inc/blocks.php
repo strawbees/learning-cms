@@ -10,7 +10,7 @@ function register_acf_block_types() {
 		'name'              => 'posts-list',
 		'title'             => __('Posts list', 'strawbees-headless-wp'),
 		'description'       => __('A list of posts.', 'strawbees-headless-wp'),
-		'render_template'   => 'blocks/posts-list.php',
+		'render_template'   => 'inc/blocks/posts-list.php',
 		'category'          => 'embed'
 	));
 }
