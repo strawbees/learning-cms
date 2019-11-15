@@ -187,7 +187,7 @@ directly from Github!
 
 ## 6. Prepare files on the server
 In the following instructions, we are assuming that the name of our app is
-`learning-cms`. We are also assuming the app domain will be
+`wordpress`. We are also assuming the app domain will be
 `learning-cms-stage.strawbees.com` (in the `nginx-vhosts.conf`). If you are
 using these instructions for another app, change it accordingly (do a "search
 and replace")!
@@ -198,11 +198,11 @@ Scaffold the app directories, with the correct permissions:
 # @remote
 # change to root
 sudo su
-mkdir /opt/bitnami/apps/learning-cms
-mkdir /opt/bitnami/apps/learning-cms/htdocs/
-mkdir /opt/bitnami/apps/learning-cms/conf
-chown -R deploy:daemon /opt/bitnami/apps/learning-cms/htdocs/
-chmod -R g+w /opt/bitnami/apps/learning-cms/htdocs/
+mkdir /opt/bitnami/apps/wordpress
+mkdir /opt/bitnami/apps/wordpress/htdocs/
+mkdir /opt/bitnami/apps/wordpress/conf
+chown -R deploy:daemon /opt/bitnami/apps/wordpress/htdocs/
+chmod -R g+w /opt/bitnami/apps/wordpress/htdocs/
 ```
 Create the app's configuration files:
 ```shell
@@ -211,7 +211,7 @@ Create the app's configuration files:
 sudo su
 
 # nginx-prefix.conf
-echo '' > /opt/bitnami/apps/learning-cms/conf/nginx-prefix.conf
+echo '' > /opt/bitnami/apps/wordpress/conf/nginx-prefix.conf
 
 # nginx-app.conf
 echo 'index index.php;
@@ -245,29 +245,29 @@ location ~ \.php$ {
   include fastcgi_params;
 }
 
-include /opt/bitnami/apps/learning-cms/htdocs/current/web/nginx[.]conf;
-' > /opt/bitnami/apps/learning-cms/conf/nginx-app.conf
+include /opt/bitnami/apps/wordpress/htdocs/current/web/nginx[.]conf;
+' > /opt/bitnami/apps/wordpress/conf/nginx-app.conf
 
-# nginx-vhosts.conf (https commented out for now)
+# nginx-vhosts.conf
 echo 'server {
     listen    80;
-    root "/opt/bitnami/apps/learning-cms/htdocs/current/web/";
+    root "/opt/bitnami/apps/wordpress/htdocs/current/web/";
     server_name  learning-cms-stage.strawbees.com;
-    include "/opt/bitnami/apps/learning-cms/conf/nginx-app.conf";
+    include "/opt/bitnami/apps/wordpress/conf/nginx-app.conf";
 }
 server {
     listen    443 ssl;
-    root   "/opt/bitnami/apps/learning-cms/htdocs/current/web/";
+    root   "/opt/bitnami/apps/wordpress/htdocs/current/web/";
     server_name  learning-cms-stage.strawbees.com;
-    ssl_certificate  "/opt/bitnami/apps/learning-cms/conf/server.crt";
-    ssl_certificate_key  "/opt/bitnami/apps/learning-cms/conf/server.key";
+    ssl_certificate  "/opt/bitnami/apps/wordpress/conf/server.crt";
+    ssl_certificate_key  "/opt/bitnami/apps/wordpress/conf/server.key";
     ssl_session_cache    shared:SSL:1m;
     ssl_session_timeout  5m;
     ssl_ciphers  HIGH:!aNULL:!MD5;
     ssl_prefer_server_ciphers  on;
-    include "/opt/bitnami/apps/learning-cms/conf/nginx-app.conf";
+    include "/opt/bitnami/apps/wordpress/conf/nginx-app.conf";
 }
-' >  /opt/bitnami/apps/learning-cms/conf/nginx-vhosts.conf
+' >  /opt/bitnami/apps/wordpress/conf/nginx-vhosts.conf
 ```
 Modify the existing "bitnami-apps" configs, so that they point to our newly
 created app:
@@ -277,10 +277,10 @@ created app:
 sudo su
 
 # bitnami-apps-prefix.conf
-echo 'include "/opt/bitnami/apps/learning-cms/conf/nginx-prefix.conf";' >> /opt/bitnami/nginx/conf/bitnami/bitnami-apps-prefix.conf
+echo 'include "/opt/bitnami/apps/wordpress/conf/nginx-prefix.conf";' >> /opt/bitnami/nginx/conf/bitnami/bitnami-apps-prefix.conf
 
 # bitnami-apps-vhosts.conf
-echo 'include "/opt/bitnami/apps/learning-cms/conf/nginx-vhosts.conf";' >> /opt/bitnami/nginx/conf/bitnami/bitnami-apps-vhosts.conf
+echo 'include "/opt/bitnami/apps/wordpress/conf/nginx-vhosts.conf";' >> /opt/bitnami/nginx/conf/bitnami/bitnami-apps-vhosts.conf
 ```
 Restart Ngnix:
 ```shell
@@ -289,14 +289,14 @@ sudo /opt/bitnami/ctlscript.sh restart nginx
 ```
 ### 6.2. Prepare for Capistrano
 Since we already know we will use Capistrano for deployment, and which files it
-needs, create the `.env` file that will be consumed by Wordpress. Note that you
-will need the Bitnami Application password genreated at step 2. Also genereate
-fresh salts at https://roots.io/salts
+needs, create the `.env` and the `web/ngnix.conf` files that will be consumed by
+Wordpress. Note that you will need the Bitnami Application password generated at
+step 2. Also generate fresh salts at https://roots.io/salts.
 ```shell
 # @remote
 # change user to deploy
 su - deploy
-mkdir /opt/bitnami/apps/learning-cms/htdocs/shared
+mkdir /opt/bitnami/apps/wordpress/htdocs/shared
 echo 'DB_NAME=appdb
 DB_USER=appdbuser
 # The password generated at the step "Setup a MySQL database and user"
@@ -321,7 +321,9 @@ AUTH_SALT=GENERATE_ME
 SECURE_AUTH_SALT=GENERATE_ME
 LOGGED_IN_SALT=GENERATE_ME
 NONCE_SALT=GENERATE_ME
-' > /opt/bitnami/apps/learning-cms/htdocs/shared/.env
+' > /opt/bitnami/apps/wordpress/htdocs/shared/.env
+mkdir /opt/bitnami/apps/wordpress/htdocs/shared/web
+touch /opt/bitnami/apps/wordpress/htdocs/shared/ngnix.conf
 ```
 
 ## 7. SSL Certificates
@@ -370,12 +372,12 @@ sudo /opt/bitnami/letsencrypt/lego --tls --email="EMAIL-ADDRESS" --domains="DOMA
 sudo su
 
 # delete any previous certificates
-rm -rf /opt/bitnami/apps/learning-cms/conf/server.key
-rm -rf /opt/bitnami/apps/learning-cms/conf/server.crt
+rm -rf /opt/bitnami/apps/wordpress/conf/server.key
+rm -rf /opt/bitnami/apps/wordpress/conf/server.crt
 
 # symlink the certificates to the correct location
-ln -sf /opt/bitnami/letsencrypt/certificates/DOMAIN.key /opt/bitnami/apps/learning-cms/conf/server.key
-ln -sf /opt/bitnami/letsencrypt/certificates/DOMAIN.crt /opt/bitnami/apps/learning-cms/conf/server.crt
+ln -sf /opt/bitnami/letsencrypt/certificates/DOMAIN.key /opt/bitnami/apps/wordpress/conf/server.key
+ln -sf /opt/bitnami/letsencrypt/certificates/DOMAIN.crt /opt/bitnami/apps/wordpress/conf/server.crt
 chown root:root /opt/bitnami/nginx/conf/server*
 chmod 600 /opt/bitnami/nginx/conf/server*
 
@@ -395,8 +397,8 @@ Create a script at /opt/bitnami/letsencrypt/scripts/renew-certificate.sh
 sudo su
 mkdir -p /opt/bitnami/letsencrypt/scripts
 touch /opt/bitnami/letsencrypt/scripts/renew-certificate.sh
-vim /opt/bitnami/letsencrypt/scripts/renew-certificate.sh
 chmod +x /opt/bitnami/letsencrypt/scripts/renew-certificate.sh
+vim /opt/bitnami/letsencrypt/scripts/renew-certificate.sh
 ```
 
 Enter the following content into the script and save it. Remember to replace the
@@ -434,6 +436,14 @@ Usually the plugin does that by itself by directly modifying `wp-config.php`,
 but since we hardened the permissions (done during the Capistrano deploy), the
 plugin won't be able to do that.
 
+### Restarting Ngnix
+If you change the W3 Total Cache settings, it will likely require you to restart
+Ngnix. To do that run:
+```shell
+# @localhost
+bundle exec cap staging deploy:restart
+```
+
 # Local development
 ## Dependencies
 * Docker
@@ -459,12 +469,14 @@ var `WP_CACHE=true` on the `.env` file.
 ## 2. Using Lando
 To start the server:
 ```shell
+# @localhost
 lando start
 ```
 The website will be avaiable at `http://learning-cms.lndo.site`
 
 To stop:
 ```shell
+# @localhost
 lando stop
 ```
 
@@ -480,6 +492,7 @@ lando stop
 The server will fetch the application from git, so make sure all changes are pushed!
 ### 2. Run Capistrano
 ```shell
+# @localhost
 bundle exec cap staging deploy
 ```
 ## From CI
@@ -526,24 +539,29 @@ return your `.env` file to it's original `DB_HOST=database`**
 ## Sync localhost to remote
 ### Database (with backup)
 ```shell
+# @localhost
 bundle exec cap staging wpcli:db:push
 ```
 Backups will be saved to `config/backup`.
 ### Uploads:
 ```shell
+# @localhost
 bundle exec cap staging wpcli:uploads:rsync:push
 ```
 ## Sync remote to localhost
 ### Database
 ```shell
+# @localhost
 bundle exec cap staging wpcli:db:pull
 ```
 ### Uploads:
 ```shell
+# @localhost
 bundle exec cap staging wpcli:uploads:rsync:pull
 ```
 ## Backup remote database
 ```shell
-wpcli:db:backup:remote
+# @localhost
+bundle exec cap staging wpcli:db:backup:remote
 ```
 Backups will be saved to `config/backup`.
