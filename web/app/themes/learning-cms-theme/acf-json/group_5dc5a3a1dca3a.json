@@ -16,7 +16,9 @@
                 "id": ""
             },
             "show_in_graphql": 1,
-            "post_type": "",
+            "post_type": [
+                "post"
+            ],
             "taxonomy": "",
             "allow_null": 0,
             "multiple": 1,
@@ -43,5 +45,5 @@
     "description": "",
     "show_in_graphql": 0,
     "graphql_field_name": "block-posts-list",
-    "modified": 1573233648
+    "modified": 1573826019
 }
