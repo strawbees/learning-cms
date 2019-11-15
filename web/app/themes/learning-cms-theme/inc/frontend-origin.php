@@ -10,21 +10,19 @@ function get_frontend_origin() {
 	if ( !function_exists( 'graphql' ) ) {
 		return $default;
 	}
-	$graphql = graphql(['query' =>'
-		query {
-			configurations(first: 1) {
-				nodes {
-					configuration {
-						frontendUrl
-					}
-				}
-			}
-		}
-	']);
-	$url = @$graphql['data']['configurations']['nodes'][0]['configuration']['frontendUrl'];
-	if ($url) {
-		return $url;
+	// If there is a 'configuration' post_type, get the first object, and see
+	// if it has a 'frontend_url' field
+	$configurations = query_posts( array( 'post_type' => array('configuration') ) );
+	if ( empty($configurations) ) {
+		return $default;
 	}
-
+	if ( !function_exists( 'get_field' ) ) {
+		return $default;
+	}
+	$field = get_field('frontend_url', $configurations[0]->ID);
+	if ($field) {
+		return $field;
+	}
+	// if not, return the default
 	return $default;
 }
