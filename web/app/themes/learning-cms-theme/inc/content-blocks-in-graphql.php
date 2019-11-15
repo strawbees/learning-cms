@@ -1,4 +1,54 @@
 <?php
+// add parsed blocks to api response
+function sb_html_to_obj( $html ) {
+	$dom = new DOMDocument();
+	libxml_use_internal_errors(true);
+	$dom->loadHTML( $html );
+	libxml_clear_errors();
+	return sb_element_to_obj( $dom->documentElement );
+}
+function sb_element_to_obj( $element ) {
+	$obj = array();
+	$obj['tag'] = $element->tagName;
+	$obj['attributes'] = array();
+	foreach ( $element->attributes as $attribute ) {
+		$obj['attributes'][$attribute->name] = $attribute->value;
+	}
+	if( empty( $obj['attributes'] ) ) {
+		unset( $obj['attributes'] );
+	}
+	foreach ( $element->childNodes as $subElement ) {
+		if ( $subElement->nodeType == XML_TEXT_NODE ) {
+			$obj['children'][] = array(
+				'tag' => 'text',
+				'text' => $subElement->wholeText
+			);
+		}
+		else {
+			$obj['children'][] = sb_element_to_obj($subElement);
+		}
+	}
+	return $obj;
+}
+function sb_clean_blocks ( $blocks ) {
+	return array_values(
+		array_map(
+			function ( $block ) {
+				unset( $block['innerContent'] );
+				$block['innerBlocks'] = sb_clean_blocks( $block['innerBlocks'] );
+				$block['innerHTMLParsed'] = sb_html_to_obj( $block['innerHTML'] )['children'][0]['children'];
+				return $block;
+			},
+			array_filter(
+				$blocks,
+				function( $block ) {
+					return $block['blockName'];
+				}
+			)
+		)
+	);
+}
+
 add_action( 'graphql_register_types', function() {
 	$post_types = \WPGraphQL::get_allowed_post_types();
 
@@ -11,7 +61,7 @@ add_action( 'graphql_register_types', function() {
 				'resolve' => function( $post ) {
 					$content_post = get_post($post->ID);
 					$content_raw = $content_post->post_content;
-					return json_encode(parse_blocks($content_raw));
+					return json_encode(sb_clean_blocks(parse_blocks($content_raw)));
 				}
 			] );
 		}

@@ -42,7 +42,7 @@ function sb_clean_blocks ( $blocks ) {
 			function ( $block ) {
 				unset( $block['innerContent'] );
 				$block['innerBlocks'] = sb_clean_blocks( $block['innerBlocks'] );
-				$block['innerHTML'] = sb_html_to_obj( $block['innerHTML'] )['children'][0]['children'];
+				$block['innerHTMLParsed'] = sb_html_to_obj( $block['innerHTML'] )['children'][0]['children'];
 				return $block;
 			},
 			array_filter(
