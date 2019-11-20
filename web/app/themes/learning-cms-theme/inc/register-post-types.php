@@ -1,16 +1,12 @@
 <?php
-
-function cptui_register_my_cpts() {
-
+add_action( 'init', function () {
 	/**
 	 * Post Type: Configurations.
 	 */
-
 	$labels = array(
 		"name" => __( "Configurations", "custom-post-type-ui" ),
 		"singular_name" => __( "Configuration", "custom-post-type-ui" ),
 	);
-
 	$args = array(
 		"label" => __( "Configurations", "custom-post-type-ui" ),
 		"labels" => $labels,
@@ -36,10 +32,6 @@ function cptui_register_my_cpts() {
 		"graphql_single_name" => 'Configuration',
 		"graphql_plural_name" => 'Configurations',
 	);
-
 	register_post_type( "configuration", $args );
-}
-
-add_action( 'init', 'cptui_register_my_cpts' );
-
+} );
 ?>

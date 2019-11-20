@@ -146,6 +146,26 @@
             "allow_null": 0
         },
         {
+            "key": "field_5dd419b0d6256",
+            "label": "Footer Notice",
+            "name": "footer_notice",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "show_in_graphql": 1,
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
+        },
+        {
             "key": "field_5dc55e01dcc23",
             "label": "Redirects",
             "name": "redirects",
@@ -185,5 +205,5 @@
     "description": "",
     "show_in_graphql": 1,
     "graphql_field_name": "configuration",
-    "modified": 1573676564
+    "modified": 1574181434
 }

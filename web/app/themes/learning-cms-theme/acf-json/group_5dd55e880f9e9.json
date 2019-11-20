@@ -1,0 +1,123 @@
+{
+    "key": "group_5dd55e880f9e9",
+    "title": "Block - File Download",
+    "fields": [
+        {
+            "key": "field_5dd55e8815aa6",
+            "label": "File (from Media Library)",
+            "name": "file_media_url",
+            "type": "file",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "show_in_graphql": 1,
+            "return_format": "url",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": ""
+        },
+        {
+            "key": "field_5dd55eb2d2d7b",
+            "label": "URL (external)",
+            "name": "file_external_url",
+            "type": "url",
+            "instructions": "In case the file is external, use this field instead of the \"File\" field above",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "show_in_graphql": 1,
+            "default_value": "",
+            "placeholder": "https:\/\/site.com\/report.pdf"
+        },
+        {
+            "key": "field_5dd55f55d2d7e",
+            "label": "File Name",
+            "name": "file_name",
+            "type": "text",
+            "instructions": "The name of the file that will be saved on the computer.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "show_in_graphql": 1,
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5dd55f2cd2d7d",
+            "label": "File Extension",
+            "name": "file_extension",
+            "type": "text",
+            "instructions": "Used to render the correct icon.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "show_in_graphql": 1,
+            "default_value": "",
+            "placeholder": "pdf",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5dd55f04d2d7c",
+            "label": "Download Button Label",
+            "name": "download_button_label",
+            "type": "text",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "show_in_graphql": 1,
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf\/file-download"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "show_in_graphql": 0,
+    "graphql_field_name": "block-posts-list",
+    "modified": 1574266982
+}

@@ -22,7 +22,7 @@
             "taxonomy": "",
             "allow_null": 0,
             "multiple": 1,
-            "return_format": "object",
+            "return_format": "id",
             "ui": 1
         }
     ],
@@ -45,5 +45,5 @@
     "description": "",
     "show_in_graphql": 0,
     "graphql_field_name": "block-posts-list",
-    "modified": 1573826019
+    "modified": 1574264857
 }

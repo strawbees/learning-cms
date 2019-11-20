@@ -4,25 +4,27 @@
  *
  * @package  Learning CMS
  */
-
-function register_acf_block_types() {
-	acf_register_block_type(array(
-		'name'              => 'posts-list',
-		'title'             => __('Posts list', 'strawbees-headless-wp'),
-		'description'       => __('A list of posts.', 'strawbees-headless-wp'),
-		'render_template'   => 'inc/blocks/posts-list.php',
-		'category'          => 'embed'
-	));
-}
 if( function_exists('acf_register_block_type') ) {
-	add_action('acf/init', 'register_acf_block_types');
+	add_action('acf/init', function() {
+		foreach ( glob( __DIR__ . '/blocks/register/*.php' ) as $filename ){
+			require_once $filename;
+		}
+	});
 }
-
-function sb_allowed_block_types( $allowed_block_types, $post ) {
+foreach ( glob(  __DIR__ . '/blocks/data/*.php' ) as $filename ){
+	require_once $filename;
+}
+/**
+ * Configure the allowed editor blocks.
+ *
+ * @package  Learning CMS
+ */
+add_filter( 'allowed_block_types', function( $allowed_block_types, $post ) {
 	// list of all blocks was retrived by typing:
 	// wp.data.select( 'core/blocks' ).getBlockTypes().forEach(({name}) => console.log(`'${name}',`))
 	// in the console, while in the post editor page in the admin
 	return array(
+		'acf/file-download',
 		'acf/posts-list',
 		// 'core-embed/amazon-kindle',
 		// 'core-embed/animoto',
@@ -61,7 +63,7 @@ function sb_allowed_block_types( $allowed_block_types, $post ) {
 		// 'core/archives',
 		// 'core/audio',
 		'core/block',
-		// 'core/button',
+		'core/button',
 		// 'core/calendar',
 		// 'core/categories',
 		// 'core/code',
@@ -77,7 +79,7 @@ function sb_allowed_block_types( $allowed_block_types, $post ) {
 		// 'core/html',
 		'core/image',
 		// 'core/latest-comments',
-		'core/latest-posts',
+		// 'core/latest-posts',
 		'core/list',
 		// 'core/media-text',
 		// 'core/missing',
@@ -88,7 +90,7 @@ function sb_allowed_block_types( $allowed_block_types, $post ) {
 		// 'core/pullquote',
 		// 'core/quote',
 		// 'core/rss',
-		// 'core/search',
+		'core/search',
 		'core/separator',
 		// 'core/shortcode',
 		// 'core/social-link-amazon',
@@ -133,11 +135,10 @@ function sb_allowed_block_types( $allowed_block_types, $post ) {
 		// 'core/social-links',
 		// 'core/spacer',
 		// 'core/subhead',
-		// 'core/table',
+		'core/table',
 		// 'core/tag-cloud',
 		// 'core/text-columns',
 		// 'core/verse',
 		// 'core/video',
 	);
-}
-add_filter( 'allowed_block_types', 'sb_allowed_block_types', 10, 2 );
+}, 10, 2 );
