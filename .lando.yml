@@ -6,6 +6,8 @@ config:
   webroot: web
   database: mariadb
   xdebug: true
+  config:
+    server: .lando.nginx.conf.tpl
 proxy:
   pma:
     - db.learning-cms.lndo.site
