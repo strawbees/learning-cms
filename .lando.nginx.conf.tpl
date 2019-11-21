@@ -60,7 +60,6 @@ http {
     }
 
   include "{{NGINX_CONFDIR}}/vhosts/*.conf";
-  include "{{LANDO_WEBROOT}}/nginx[.]conf";
 
   # HTTP Server
   server {
@@ -73,5 +72,7 @@ http {
       allow 127.0.0.1;
       deny all;
     }
+
+    include "{{LANDO_WEBROOT}}/nginx[.]conf";
   }
 }
