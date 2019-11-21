@@ -1,16 +1,12 @@
 <?php
-function get_block_data_core_paragraph($block) {
+function get_block_data_core_paragraph( $block ) {
 	$html = convert_html_to_object( $block['innerHTML'] );
-	$align = isset( $block['attrs']['align'] ) ? $block['attrs']['align'] : 'left';
-	$textColor = isset( $block['attrs']['textColor'] ) ? $block['attrs']['textColor'] : '';
-	$customTextColor = isset( $block['attrs']['customTextColor'] ) ? $block['attrs']['customTextColor'] : '';
-	$backgroundColor = isset( $block['attrs']['backgroundColor'] ) ? $block['attrs']['backgroundColor'] : '';
-	$customBackgroundColor = isset( $block['attrs']['customBackgroundColor'] ) ? $block['attrs']['customBackgroundColor'] : '';
 	return array(
-		'align'           => $align,
-		'textColor'       => $customTextColor ? $customTextColor : $textColor,
-		'backgroundColor' => $customBackgroundColor ? $customBackgroundColor : $backgroundColor,
-		'innerHTML'       => $html['innerChildren']
+		'variant'         => resolve_html_class_variant( $html ),
+		'textAlign'       => resolve_attrs_prop( $block['attrs'], 'align', 'left' ),
+		'textColor'       => resolve_attrs_color( $block['attrs'], 'textColor', 'customTextColor' ),
+		'backgroundColor' => resolve_attrs_color( $block['attrs'], 'backgroundColor', 'customBackgroundColor' ),
+		'innerHTML'       => resolve_html_children( $html ),
 	);
 }
 ?>

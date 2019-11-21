@@ -1,10 +1,10 @@
 <?php
-function get_block_data_acf_posts_list($block) {
+function get_block_data_acf_posts_list( $block ) {
 	$post_ids = $block['attrs']['data']['posts'];
-	$data = array();
+	$posts = array();
 	foreach ($post_ids as $id) {
 		setup_postdata( get_post( $id ) );
-		$data[] = array(
+		$posts[] = array(
 			'id'         => $id,
 			'title'      => get_the_title( $id ),
 			'excerpt'    => get_the_excerpt( $id ),
@@ -24,7 +24,10 @@ function get_block_data_acf_posts_list($block) {
 		);
 		wp_reset_postdata();
 	}
-	return $data;
+	return array(
+		'sizeFormat' => resolve_attrs_size_format( $block['attrs'] ),
+		'posts'      => $posts,
+	);
 }
 
 ?>

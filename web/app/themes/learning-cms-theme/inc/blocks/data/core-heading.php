@@ -1,15 +1,13 @@
 <?php
-function get_block_data_core_heading($block) {
+function get_block_data_core_heading( $block ) {
 	$html = convert_html_to_object( $block['innerHTML'] );
-	$align = isset( $block['attrs']['align'] ) ? $block['attrs']['align'] : 'left';
-	$level = isset( $block['attrs']['level'] ) ? $block['attrs']['level'] : 2;
-	$textColor = isset( $block['attrs']['textColor'] ) ? $block['attrs']['textColor'] : '';
-	$customTextColor = isset( $block['attrs']['customTextColor'] ) ? $block['attrs']['customTextColor'] : '';
 	return array(
-		'align'     => $align,
-		'level'     => $level,
-		'textColor' => $customTextColor ? $customTextColor : $textColor,
-		'innerHTML' => $html['innerChildren']
+		'variant'   => resolve_html_class_variant( $html ),
+		'anchor'    => resolve_html_attribute( $html, 'id' ),
+		'textAlign' => resolve_attrs_prop( $block['attrs'], 'align', 'left' ),
+		'level'     => resolve_attrs_prop( $block['attrs'], 'level', 2 ),
+		'textColor' => resolve_attrs_color( $block['attrs'], 'textColor', 'customTextColor' ),
+		'innerHTML' => resolve_html_children( $html ),
 	);
 }
 ?>

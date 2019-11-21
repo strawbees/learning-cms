@@ -4,15 +4,11 @@ function sb_clean_blocks ( $blocks ) {
 		array_map(
 			function ( $block ) {
 				$get_block_data = 'get_block_data_' . preg_replace( '~[^\pL\d]+~u', '_', $block['blockName'] );
-				if (function_exists($get_block_data)) {
-					$block['data'] = $get_block_data( $block );
-				}
-				$block['innerBlocks'] = sb_clean_blocks( $block['innerBlocks'] );
-				//$block['innerHTMLParsed'] = convert_html_to_object( $block['innerHTML'] );
-				unset( $block['attrs'] );
-				unset( $block['innerHTML'] );
-				unset( $block['innerContent'] );
-				return $block;
+				return array (
+					'name'        => $block['blockName'],
+					'data'        => function_exists($get_block_data) ? $get_block_data( $block ) : (object) null,
+					'innerBlocks' => sb_clean_blocks( $block['innerBlocks'] )
+				);
 			},
 			array_filter(
 				$blocks,

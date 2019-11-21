@@ -1,22 +1,19 @@
 <?php
-function get_block_data_core_image($block) {
+function get_block_data_core_image( $block ) {
 	$url = convert_to_cdn_url(
 		wp_get_attachment_image_src(
-			$block['attrs']['id'], $block['attrs']['sizeSlug']
+			resolve_attrs_prop( $block['attrs'], 'id' ),
+			resolve_attrs_prop( $block['attrs'], 'sizeSlug', 'large' )
 		)[0]
 	);
 	$html = convert_html_to_object( $block['innerHTML'] );
-	$captionHtml = find_first_html_tag ( $html, 'figcaption' );
-	$linkHtml = find_first_html_tag ( $html, 'a' );
-	$link = '';
-	if ($linkHtml) {
-		$link = convert_to_relative_url( $linkHtml['attributes']['href'] );
-	}
-
+	$figcaption = find_first_html_tag ( $html, 'figcaption' );
+	$a = find_first_html_tag ( $html, 'a' );
 	return array(
+		'sizeFormat'  => resolve_attrs_size_format( $block['attrs'] ),
 		'url'         => $url,
-		'link'        => $link,
-		'captionHtml' => $captionHtml ? $captionHtml['innerChildren'] : false
+		'link'        => resolve_html_attribute( $a, 'href' ),
+		'captionHtml' => resolve_html_children( $figcaption ),
 	);
 }
 ?>
