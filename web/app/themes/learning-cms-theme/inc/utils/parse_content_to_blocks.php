@@ -8,9 +8,10 @@ function sb_clean_blocks ( $blocks ) {
 					$block['data'] = $get_block_data( $block );
 				}
 				$block['innerBlocks'] = sb_clean_blocks( $block['innerBlocks'] );
-				$block['innerHTMLParsed'] = html_to_object( $block['innerHTML'] );
-				unset( $block['innerContent'] );
+				//$block['innerHTMLParsed'] = convert_html_to_object( $block['innerHTML'] );
+				unset( $block['attrs'] );
 				unset( $block['innerHTML'] );
+				unset( $block['innerContent'] );
 				return $block;
 			},
 			array_filter(

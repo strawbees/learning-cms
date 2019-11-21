@@ -3,7 +3,9 @@
  * Theme for the Strawbees Headless WordPress.
  * @package  Learning CMS
  */
-require_once 'inc/utils/index.php';
+foreach ( glob(  __DIR__ . '/inc/utils/*.php' ) as $filename ){
+	require_once $filename;
+}
 require_once 'inc/add-theme-support.php';
 require_once 'inc/register-blocks.php';
 require_once 'inc/extend-api.php';

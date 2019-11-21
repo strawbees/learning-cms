@@ -1,5 +1,5 @@
 <?php
-function html_to_object( $html ) {
+function convert_html_to_object( $html ) {
 	if (!$html) {
 		return null;
 	}
@@ -10,7 +10,7 @@ function html_to_object( $html ) {
 	if (!$dom->documentElement) {
 		return null;
 	}
-	$obj = element_to_object( $dom->documentElement );
+	$obj = convert_element_to_object( $dom->documentElement );
 	if ($obj['innerChildren'] &&
 		$obj['innerChildren'][0] &&
 		$obj['innerChildren'][0]['innerChildren'] &&
@@ -20,7 +20,7 @@ function html_to_object( $html ) {
 	return null;
 }
 
-function element_to_object( $element ) {
+function convert_element_to_object( $element ) {
 	$obj = array();
 	$obj['tag'] = $element->tagName;
 	$obj['attributes'] = array();
@@ -38,7 +38,7 @@ function element_to_object( $element ) {
 			);
 		}
 		else {
-			$obj['innerChildren'][] = element_to_object($subElement);
+			$obj['innerChildren'][] = convert_element_to_object($subElement);
 		}
 	}
 	return $obj;
