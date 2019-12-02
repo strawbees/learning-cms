@@ -73,7 +73,7 @@ the database that will be used by our application.
 
 To access the password, SSH into the server and type:
 ```shell
-cat bitnami_application_password
+cat /home/bitnami/bitnami_application_password
 ```
 With that password in hand (will refer to it as `BITNAMI_APPLICATION_PASSWORD`,
 in this document), let's connect to the database server:
@@ -94,8 +94,8 @@ environment variables of the application):
 
 ```sql
 create database appdb;
-create user 'appdbuser'@'localhost' identified by 'GENERATED_DB_PASSWORD';
-grant all privileges on appdb.* TO 'appdbuser'@'localhost';
+create user 'appdbuser'@'127.0.0.1' identified by 'GENERATED_DB_PASSWORD';
+grant all privileges on appdb.* TO 'appdbuser'@'127.0.0.1';
 exit
 ```
 ## 5. Setup Authentication & Authorisation
@@ -187,7 +187,7 @@ directly from Github!
 
 ## 6. Prepare files on the server
 In the following instructions, we are assuming that the name of our app is
-`learning-cms`. We are also assuming the app domain will be
+`wordpress`. We are also assuming the app domain will be
 `learning-cms-stage.strawbees.com` (in the `nginx-vhosts.conf`). If you are
 using these instructions for another app, change it accordingly (do a "search
 and replace")!
@@ -198,11 +198,11 @@ Scaffold the app directories, with the correct permissions:
 # @remote
 # change to root
 sudo su
-mkdir /opt/bitnami/apps/learning-cms
-mkdir /opt/bitnami/apps/learning-cms/htdocs/
-mkdir /opt/bitnami/apps/learning-cms/conf
-chown -R deploy:daemon /opt/bitnami/apps/learning-cms/htdocs/
-chmod -R g+w /opt/bitnami/apps/learning-cms/htdocs/
+mkdir /opt/bitnami/apps/wordpress
+mkdir /opt/bitnami/apps/wordpress/htdocs/
+mkdir /opt/bitnami/apps/wordpress/conf
+chown -R deploy:daemon /opt/bitnami/apps/wordpress/htdocs/
+chmod -R g+w /opt/bitnami/apps/wordpress/htdocs/
 ```
 Create the app's configuration files:
 ```shell
@@ -211,7 +211,7 @@ Create the app's configuration files:
 sudo su
 
 # nginx-prefix.conf
-echo '' > /opt/bitnami/apps/learning-cms/conf/nginx-prefix.conf
+echo '' > /opt/bitnami/apps/wordpress/conf/nginx-prefix.conf
 
 # nginx-app.conf
 echo 'index index.php;
@@ -245,29 +245,29 @@ location ~ \.php$ {
   include fastcgi_params;
 }
 
-include /opt/bitnami/apps/learning-cms/htdocs/current/web/nginx[.]conf;
-' > /opt/bitnami/apps/learning-cms/conf/nginx-app.conf
+include /opt/bitnami/apps/wordpress/htdocs/current/web/nginx[.]conf;
+' > /opt/bitnami/apps/wordpress/conf/nginx-app.conf
 
-# nginx-vhosts.conf (https commented out for now)
+# nginx-vhosts.conf
 echo 'server {
     listen    80;
-    root "/opt/bitnami/apps/learning-cms/htdocs/current/web/";
+    root "/opt/bitnami/apps/wordpress/htdocs/current/web/";
     server_name  learning-cms-stage.strawbees.com;
-    include "/opt/bitnami/apps/learning-cms/conf/nginx-app.conf";
+    include "/opt/bitnami/apps/wordpress/conf/nginx-app.conf";
 }
 server {
     listen    443 ssl;
-    root   "/opt/bitnami/apps/learning-cms/htdocs/current/web/";
+    root   "/opt/bitnami/apps/wordpress/htdocs/current/web/";
     server_name  learning-cms-stage.strawbees.com;
-    ssl_certificate  "/opt/bitnami/apps/learning-cms/conf/server.crt";
-    ssl_certificate_key  "/opt/bitnami/apps/learning-cms/conf/server.key";
+    ssl_certificate  "/opt/bitnami/apps/wordpress/conf/server.crt";
+    ssl_certificate_key  "/opt/bitnami/apps/wordpress/conf/server.key";
     ssl_session_cache    shared:SSL:1m;
     ssl_session_timeout  5m;
     ssl_ciphers  HIGH:!aNULL:!MD5;
     ssl_prefer_server_ciphers  on;
-    include "/opt/bitnami/apps/learning-cms/conf/nginx-app.conf";
+    include "/opt/bitnami/apps/wordpress/conf/nginx-app.conf";
 }
-' >  /opt/bitnami/apps/learning-cms/conf/nginx-vhosts.conf
+' >  /opt/bitnami/apps/wordpress/conf/nginx-vhosts.conf
 ```
 Modify the existing "bitnami-apps" configs, so that they point to our newly
 created app:
@@ -277,10 +277,10 @@ created app:
 sudo su
 
 # bitnami-apps-prefix.conf
-echo 'include "/opt/bitnami/apps/learning-cms/conf/nginx-prefix.conf";' >> /opt/bitnami/nginx/conf/bitnami/bitnami-apps-prefix.conf
+echo 'include "/opt/bitnami/apps/wordpress/conf/nginx-prefix.conf";' >> /opt/bitnami/nginx/conf/bitnami/bitnami-apps-prefix.conf
 
 # bitnami-apps-vhosts.conf
-echo 'include "/opt/bitnami/apps/learning-cms/conf/nginx-vhosts.conf";' >> /opt/bitnami/nginx/conf/bitnami/bitnami-apps-vhosts.conf
+echo 'include "/opt/bitnami/apps/wordpress/conf/nginx-vhosts.conf";' >> /opt/bitnami/nginx/conf/bitnami/bitnami-apps-vhosts.conf
 ```
 Restart Ngnix:
 ```shell
@@ -289,18 +289,20 @@ sudo /opt/bitnami/ctlscript.sh restart nginx
 ```
 ### 6.2. Prepare for Capistrano
 Since we already know we will use Capistrano for deployment, and which files it
-needs, create the `.env` file that will be consumed by Wordpress. Note that you
-will need the Bitnami Application password genreated at step 2. Also genereate
-fresh salts at https://roots.io/salts
+needs, create the `.env` and the `web/ngnix.conf` files that will be consumed by
+Wordpress. Note that you will need the Bitnami Application password generated at
+step 2. Also generate fresh salts at https://roots.io/salts.
 ```shell
 # @remote
 # change user to deploy
 su - deploy
-mkdir /opt/bitnami/apps/learning-cms/htdocs/shared
+mkdir /opt/bitnami/apps/wordpress/htdocs/shared
 echo 'DB_NAME=appdb
 DB_USER=appdbuser
-# database password generated at the step "Setup a MySQL database and user"
+# The password generated at the step "Setup a MySQL database and user"
 DB_PASSWORD=GENERATED_DB_PASSWORD
+# Keep the DB_HOST here, even if it is the default! Do not use "localhost"!
+DB_HOST=127.0.0.1
 DB_PREFIX=wp_
 
 WP_ENV=development
@@ -319,7 +321,9 @@ AUTH_SALT=GENERATE_ME
 SECURE_AUTH_SALT=GENERATE_ME
 LOGGED_IN_SALT=GENERATE_ME
 NONCE_SALT=GENERATE_ME
-' > /opt/bitnami/apps/learning-cms/htdocs/shared/.env
+' > /opt/bitnami/apps/wordpress/htdocs/shared/.env
+mkdir /opt/bitnami/apps/wordpress/htdocs/shared/web
+touch /opt/bitnami/apps/wordpress/htdocs/shared/ngnix.conf
 ```
 
 ## 7. SSL Certificates
@@ -368,12 +372,12 @@ sudo /opt/bitnami/letsencrypt/lego --tls --email="EMAIL-ADDRESS" --domains="DOMA
 sudo su
 
 # delete any previous certificates
-rm -rf /opt/bitnami/apps/learning-cms/conf/server.key
-rm -rf /opt/bitnami/apps/learning-cms/conf/server.crt
+rm -rf /opt/bitnami/apps/wordpress/conf/server.key
+rm -rf /opt/bitnami/apps/wordpress/conf/server.crt
 
 # symlink the certificates to the correct location
-ln -sf /opt/bitnami/letsencrypt/certificates/DOMAIN.key /opt/bitnami/apps/learning-cms/conf/server.key
-ln -sf /opt/bitnami/letsencrypt/certificates/DOMAIN.crt /opt/bitnami/apps/learning-cms/conf/server.crt
+ln -sf /opt/bitnami/letsencrypt/certificates/DOMAIN.key /opt/bitnami/apps/wordpress/conf/server.key
+ln -sf /opt/bitnami/letsencrypt/certificates/DOMAIN.crt /opt/bitnami/apps/wordpress/conf/server.crt
 chown root:root /opt/bitnami/nginx/conf/server*
 chmod 600 /opt/bitnami/nginx/conf/server*
 
@@ -393,8 +397,8 @@ Create a script at /opt/bitnami/letsencrypt/scripts/renew-certificate.sh
 sudo su
 mkdir -p /opt/bitnami/letsencrypt/scripts
 touch /opt/bitnami/letsencrypt/scripts/renew-certificate.sh
-vim /opt/bitnami/letsencrypt/scripts/renew-certificate.sh
 chmod +x /opt/bitnami/letsencrypt/scripts/renew-certificate.sh
+vim /opt/bitnami/letsencrypt/scripts/renew-certificate.sh
 ```
 
 Enter the following content into the script and save it. Remember to replace the
@@ -421,6 +425,80 @@ You really don't want to have to redo all of the steps above, so this is a good
 moment to take a snapshot of your instance, so you can rollback to this exact
 point! Do you via the Lightsail dashboard.
 
+# Creating a new stage
+
+## 1. Snapshot the instance
+In the Lightsail dashboard, create a new snapshot of the instance you would like
+to fork (or use an existing snapshot).
+
+## 2. Create a new instance from the snapshot
+Once you have the snapshot, click on it's menu (3 vertical dots) > "Create new
+instance". Make sure to name the instance properly, eg.`learning-cms-fork`.
+
+Once the new instance is created, you can delete the snapshot.
+
+## 3. Attach the instance to a static IP
+In Lightsail, create a new static IP and attach it to the newly created
+instance.
+
+If you wish to run this stage from a custom domain, use the static IP as the
+A-Record on your DNS.
+
+## 4. Update the vhosts
+Once you know the new HOST (the custom domain, or just the static IP, if you
+are not using a domain) you will need to ssh into it and update the vhosts.
+
+The new instance has the SSH key as the source one, so you will use the same
+process to connect to it. Just make sure to use the correct HOST. For example:
+```shell
+ssh -i ~/.ssh/learning-cms-root.pem bitnami@learning-cms-fork.strawbees.com
+```
+Open the vhosts file and update the entries for `server_name`, for both servers,
+the one port 80 and the one on port 443.
+
+```shell
+# @remote
+# open the vhosts file, update both `server_name`entries
+sudo vim /opt/bitnami/apps/wordpress/conf/nginx-vhosts.conf
+```
+Restart the server, so that the new vhost kicks in.
+
+```shell
+# @remote
+sudo /opt/bitnami/ctlscript.sh restart
+```
+
+## 5. Update the SSL certificate
+Since you are using a new domain, you will need to update the certificate.
+Do the steps from the guide "Server Setup > SSL Certificates".
+
+## 6. Update WP_HOME in the .env file
+Open the `.env` file and update the `WP_HOME` entry to the new HOST.
+```shell
+# @remote
+# change to root
+sudo su
+# change to deploy
+su - deploy
+# open the .env file and replace the WP_HOME entry
+vim /opt/bitnami/apps/wordpress/htdocs/current/.env
+```
+
+## 7. Search and replace the new HOST on the Wordpress database
+Rearch and replace the database for entries pointing to the old HOST.
+```shell
+# @remote
+# change to root
+sudo su
+# change to deploy
+su - deploy
+# cd to the wordpress installation
+cd /opt/bitnami/apps/wordpress/htdocs/current
+# run the "search replace" command
+wp search-replace OLD_HOST NEW_HOST
+```
+
+
 # Managing Wordpress
 
 ## W3 Total Cache plugin
@@ -432,10 +510,20 @@ Usually the plugin does that by itself by directly modifying `wp-config.php`,
 but since we hardened the permissions (done during the Capistrano deploy), the
 plugin won't be able to do that.
 
+### Restarting Ngnix
+If you change the W3 Total Cache settings, it will likely require you to restart
+Ngnix. To do that run:
+```shell
+# @localhost
+bundle exec cap staging deploy:restart
+```
+
 # Local development
 ## Dependencies
 * Docker
 * Lando (https://lando.dev/)
+* WP CLI (https://wp-cli.org/#installing)
+* MySQL: `brew install mysql`
 
 ## 1. Create `.env`
 ```
@@ -455,12 +543,14 @@ var `WP_CACHE=true` on the `.env` file.
 ## 2. Using Lando
 To start the server:
 ```shell
+# @localhost
 lando start
 ```
 The website will be avaiable at `http://learning-cms.lndo.site`
 
 To stop:
 ```shell
+# @localhost
 lando stop
 ```
 
@@ -476,7 +566,76 @@ lando stop
 The server will fetch the application from git, so make sure all changes are pushed!
 ### 2. Run Capistrano
 ```shell
+# @localhost
 bundle exec cap staging deploy
 ```
 ## From CI
 Add key to appveyor https://www.appveyor.com/docs/how-to/private-git-sub-modules/
+
+# Pushing and Pulling data (Databases and uploads)
+You can easily push the local database and uploads to remote and vice versa
+using Capistrano.
+
+However be aware that it will use the database credentials in the `.env` file,
+which probably will fail since those credentials are for connecting *inside*
+docker, in the container managed by Lando. So, in order to be able to connect
+to the local database, you will first need to figure out what is the port that
+the database service is being *forwarded* to, then change the `DB_HOST` variable
+in `.env` so that it points to that specific port and host. **You will always
+need to make this check, as every time docker starts, a new port will be used.
+Let this extra step be a warning to the fact that managing databases is risky
+business!**
+
+To figure out the port run the command, in the root of the project:
+```shell
+lando info
+```
+Then look for the `database` service, and find the `external_connection` host
+and port. It should look something like this:
+```
+service: 'database',
+external_connection: {
+  host: 'localhost',
+  port: 'XXXXX'
+},
+```
+With the external host and port in hand, you will have to update the `.env` file
+so that it matches it. So open the `.env` and make sure you have a line like
+this:
+```
+DB_HOST=localhost:XXXXX
+```
+Ok, so now we can use Capistrano to sync the local and the remote server.
+
+**ATTENTION! When you are finished with your syncing business, make sure to
+return your `.env` file to it's original `DB_HOST=database`**
+
+## Sync localhost to remote
+### Database (with backup)
+```shell
+# @localhost
+bundle exec cap staging wpcli:db:push
+```
+Backups will be saved to `config/backup`.
+### Uploads:
+```shell
+# @localhost
+bundle exec cap staging wpcli:uploads:rsync:push
+```
+## Sync remote to localhost
+### Database
+```shell
+# @localhost
+bundle exec cap staging wpcli:db:pull
+```
+### Uploads:
+```shell
+# @localhost
+bundle exec cap staging wpcli:uploads:rsync:pull
+```
+## Backup remote database
+```shell
+# @localhost
+bundle exec cap staging wpcli:db:backup:remote
+```
+Backups will be saved to `config/backup`.

@@ -1,10 +1,10 @@
-set :application, 'learning-cms'
+set :application, 'wordpress'
 set :repo_url, 'https://github.com/strawbees/learning-cms.git'
 
 # Branch options
 # Prompts for the branch name (defaults to current branch)
 #ask :branch, -> { `git rev-parse --abbrev-ref HEAD`.chomp }
-set :branch, ENV.fetch('REVISION', -> { `git rev-parse --abbrev-ref HEAD`.chomp })
+set :branch, ENV.fetch('REVISION', 'master')
 
 set :deploy_to, -> { "/opt/bitnami/apps/#{fetch(:application)}/htdocs" }
 
@@ -14,22 +14,31 @@ set :log_level, :info
 # Apache users with .htaccess files:
 # it needs to be added to linked_files so it persists across deploys:
 # set :linked_files, fetch(:linked_files, []).push('.env', 'web/.htaccess')
-set :linked_files, fetch(:linked_files, []).push('.env')
-set :linked_dirs, fetch(:linked_dirs, []).push('web/app/uploads')
+set :linked_files, fetch(:linked_files, []).push(
+    '.env',
+    'web/nginx.conf'
+)
+set :linked_dirs, fetch(:linked_dirs, []).push(
+    'web/app/uploads',
+    'web/app/cache',
+    'web/app/w3tc-config'
+)
 
 namespace :deploy do
   desc 'Change permissions'
   task :change_permissions do
     on roles(:app) do
       within fetch(:release_path) do
-        sudo 'find', '.', '-exec', 'chown', 'deploy:daemon', '{}', '\\;'
+        sudo 'find', '-L', '.', '-exec', 'chown', 'deploy:daemon', '{}', '\\;'
         sudo 'find', '.', '-type', 'd', '-exec', 'chmod', '755', '{}', '\\;'
         sudo 'find', '.', '-type', 'f', '-exec', 'chmod', '644', '{}', '\\;'
         sudo 'chmod', '775', 'web'
+        sudo 'chmod', '777', 'web/nginx.conf'
         sudo 'chmod', '640', 'web/index.php'
         sudo 'chmod', '640', 'web/wp-config.php'
         sudo 'chmod', '-f', '777', 'web/app/cache', '||', 'true'
         sudo 'chmod', '-f', '777', 'web/app/w3tc-config', '||', 'true'
+        sudo 'chmod', '-f', '775', 'web/app/themes/learning-cms-theme/acf-json', '||', 'true'
       end
     end
   end

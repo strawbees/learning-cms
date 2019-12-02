@@ -1,0 +1,82 @@
+{
+    "key": "group_5dc42d3f1da73",
+    "title": "ACL",
+    "fields": [
+        {
+            "key": "field_5dc42eec6f1e2",
+            "label": "ACL Enabled",
+            "name": "acl_enabled",
+            "type": "true_false",
+            "instructions": "Should the access of this item be controlled by an ACL?",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "show_in_graphql": 1,
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5dc42d55cec05",
+            "label": "ACL Roles",
+            "name": "acl_roles",
+            "type": "select",
+            "instructions": "Which roles can access this page",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "show_in_graphql": 1,
+            "choices": {
+                "administrator": "Administrator",
+                "editor": "Editor",
+                "author": "Author",
+                "contributor": "Contributor",
+                "subscriber": "Subscriber"
+            },
+            "default_value": [],
+            "allow_null": 0,
+            "multiple": 1,
+            "ui": 1,
+            "ajax": 0,
+            "return_format": "value",
+            "placeholder": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "page"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "side",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "show_in_graphql": 1,
+    "graphql_field_name": "acl",
+    "modified": 1573676210
+}

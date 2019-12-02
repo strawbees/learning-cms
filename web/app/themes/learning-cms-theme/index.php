@@ -1,14 +1,19 @@
 <?php
-global $wp_query;
-
-$obj = $wp_query->queried_object;
-$res = array();
-if (!$obj || !isset($obj->post_type)) {
-	return wp_send_json($res);
+/**
+ * Redirect frontend requests to REST API.
+ *
+ * @package  Learning CMS
+ */
+// Redirect individual posts to the REST API endpoint.
+if ( is_singular() ) {
+	echo get_post_permalink();
+	//header(
+	//	sprintf(
+	//		'Location: /wp-json/wp/v2/%s/%s',
+	//		get_post_type_object( get_post_type() )->rest_base,
+	//		get_post()->ID
+	//	)
+	//);
+} else {
+	header( 'Location: /wp-json/' );
 }
-$res['ID'] = $obj->ID;
-$res['post_type'] = $obj->post_type;
-$res['acl'] = get_field('acl', $obj->ID);
-
-return wp_send_json($res);
-?>

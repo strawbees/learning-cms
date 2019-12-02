@@ -1,11 +1,13 @@
 # macOS
 .DS_Store
 
+# Capistrano
+config/backup
+
 # Application
 web/app/plugins/*
 !web/app/plugins/.gitkeep
 web/app/mu-plugins/*/
-!web/app/mu-plugins/content-blocks-in-api
 web/app/upgrade
 web/app/uploads/*
 !web/app/uploads/.gitkeep
