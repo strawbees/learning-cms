@@ -3,7 +3,7 @@ acf_register_block_type(array(
 	'name'              => 'file-download',
 	'mode'              => 'auto',
 	'supports'          => array(
-		'align' => false,
+		'align'           => false,
 		'customClassName' => false,
 	),
 	'title'             => __('File download', 'strawbees-headless-wp'),
@@ -22,7 +22,7 @@ acf_register_block_type(array(
 			'url' => $file_external_url ? $file_external_url : $file_media_url,
 		);
 		?>
-		<div data-block="<?php echo htmlspecialchars(json_encode($data));?>" style="background-color:#fff8be;">
+		<div style="background-color:#fff8be;">
 			<h5>File Download</h5>
 			<?php echo sprintf('%s.%s', $data['title'], $data['extension']); ?>
 		</div>

@@ -52,5 +52,4 @@ function get_block_data_acf_posts_list( $block ) {
 		'posts'      => $posts,
 	);
 }
-
 ?>

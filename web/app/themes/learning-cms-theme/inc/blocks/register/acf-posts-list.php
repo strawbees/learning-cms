@@ -3,7 +3,7 @@ acf_register_block_type(array(
 	'name'              => 'posts-list',
 	'mode'              => 'auto',
 	'supports'          => array(
-		'align' => false,
+		'align'           => true,
 		'customClassName' => false,
 	),
 	'title'             => __('Posts list', 'strawbees-headless-wp'),
@@ -38,7 +38,7 @@ acf_register_block_type(array(
 			wp_reset_postdata();
 		}
 		?>
-		<div data-block="<?php echo htmlspecialchars(json_encode($posts));?>" style="background-color:#fff8be;">
+		<div style="background-color:#fff8be;">
 			<h5>Post List</h5>
 			<ul>
 				<?php foreach ($posts as $post):?>

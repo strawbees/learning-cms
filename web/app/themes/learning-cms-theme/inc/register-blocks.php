@@ -29,7 +29,7 @@ add_action('admin_head', function() {
 			.wp-block[data-type="core/heading"],
 			.wp-block[data-type="core/list"],
 			.wp-block[data-type="core/paragraph"] {
-				max-width: none;
+				//max-width: none;
 			}
 		</style>
 	';
@@ -46,6 +46,7 @@ add_filter( 'allowed_block_types', function( $allowed_block_types, $post ) {
 	return array(
 		'acf/file-download',
 		'acf/posts-list',
+		'acf/product-card',
 		// 'core-embed/amazon-kindle',
 		// 'core-embed/animoto',
 		// 'core-embed/cloudup',
