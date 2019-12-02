@@ -80,5 +80,45 @@ add_theme_support( 'editor-color-palette', array(
 		'slug' => 'yellow',
 		'color' => '#FEB702',
 	),
+	array(
+		'name'  => esc_html__( 'White (75% transparent)', 'strawbees-headless-wp' ),
+		'slug' => 'white-alpha-75',
+		'color' => 'rgba(255,255,255,0.75)',
+	),
+	array(
+		'name'  => esc_html__( 'Light Grey (75% transparent)', 'strawbees-headless-wp' ),
+		'slug' => 'lightGrey-alpha-75',
+		'color' => 'rgba(235,235,235,0.75)',
+	),
+	array(
+		'name'  => esc_html__( 'Dark Grey (75% transparent)', 'strawbees-headless-wp' ),
+		'slug' => 'darkGrey-alpha-75',
+		'color' => 'rgba(82,82,82,0.75)',
+	),
+	array(
+		'name'  => esc_html__( 'Black (75% transparent)', 'strawbees-headless-wp' ),
+		'slug' => 'black-alpha-75',
+		'color' => 'rgba(48,48,48,0.75)',
+	),
+	array(
+		'name'  => esc_html__( 'Blue (75% transparent)', 'strawbees-headless-wp' ),
+		'slug' => 'blue-alpha-75',
+		'color' => 'rgba(0,173,238,0.75)',
+	),
+	array(
+		'name'  => esc_html__( 'Green (75% transparent)', 'strawbees-headless-wp' ),
+		'slug' => 'green-alpha-75',
+		'color' => 'rgba(0,169,157,0.75)',
+	),
+	array(
+		'name'  => esc_html__( 'Pink (75% transparent)', 'strawbees-headless-wp' ),
+		'slug' => 'pink-alpha-75',
+		'color' => 'rgba(255,115,129,0.75)',
+	),
+	array(
+		'name'  => esc_html__( 'Yellow (75% transparent)', 'strawbees-headless-wp' ),
+		'slug' => 'yellow-alpha-75',
+		'color' => 'rgb(254,183,2,0.75)',
+	),
 ));
 add_theme_support( '__experimental-editor-gradient-presets', array() );
