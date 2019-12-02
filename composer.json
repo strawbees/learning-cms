@@ -44,10 +44,10 @@
     }
   ],
   "require": {
+    "php": ">=7.1",
     "advanced-custom-fields/advanced-custom-fields-pro": "*",
     "composer/installers": "^1.7",
     "oscarotero/env": "^1.2.0",
-    "php": ">=7.1",
     "roots/wordpress": "^5.3.0",
     "roots/wp-config": "1.0.0",
     "roots/wp-password-bcrypt": "1.0.0",
@@ -55,8 +55,9 @@
     "wp-graphql/wp-graphiql": "^1.0",
     "wp-graphql/wp-graphql": "^0.4.0",
     "wp-graphql/wp-graphql-acf": "dev-master",
-    "wpackagist-plugin/gutenberg": "^6.8",
-    "wpackagist-plugin/w3-total-cache": "^0.10.1",
+    "wpackagist-plugin/duplicate-post": "^3.2",
+    "wpackagist-plugin/gutenberg": "^7.0",
+    "wpackagist-plugin/w3-total-cache": "^0.11.0",
     "wpackagist-plugin/wp-mail-smtp": "^1.7"
   },
   "require-dev": {
@@ -72,9 +73,7 @@
   "prefer-stable": true,
   "extra": {
     "installer-paths": {
-      "web/app/mu-plugins/{$name}/": [
-          "type:wordpress-muplugin"
-      ],
+      "web/app/mu-plugins/{$name}/": ["type:wordpress-muplugin"],
       "web/app/plugins/{$name}/": ["type:wordpress-plugin"],
       "web/app/themes/{$name}/": ["type:wordpress-theme"]
     },
