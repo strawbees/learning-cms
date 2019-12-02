@@ -20,6 +20,7 @@ static IP and attache it to the instance. If you already have an IP associated
 with this service, attach it instead and skip the step below.
 * Add the IP as a `A` record to the domain/subdomain you want to associate with
 this server.
+
 |name                             |type|value        |tty|
 |---------------------------------|----|-------------|---|
 |learning-cms-stage.strawbees.com.|A   |x.xxx.xxx.xxx|360|
