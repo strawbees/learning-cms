@@ -9,11 +9,19 @@ function get_block_data_core_image( $block ) {
 	$html = convert_html_to_object( $block['innerHTML'] );
 	$figcaption = find_first_html_tag ( $html, 'figcaption' );
 	$a = find_first_html_tag ( $html, 'a' );
+	$link = '';
+	if ( $a ) {
+		$link = resolve_html_attribute( $a, 'href' );
+	}
+	$captionHtml = null;
+	if ( $figcaption ) {
+		$captionHtml = resolve_html_children( $figcaption );
+	}
 	return array(
 		'sizeFormat'  => resolve_attrs_size_format( $block['attrs'] ),
 		'url'         => $url,
-		'link'        => resolve_html_attribute( $a, 'href' ),
-		'captionHtml' => resolve_html_children( $figcaption ),
+		'link'        => $link,
+		'captionHtml' => $captionHtml,
 	);
 }
 ?>

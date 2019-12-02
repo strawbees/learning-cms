@@ -9,14 +9,9 @@ function get_block_data_core_button( $block ) {
 		$innerHTML = resolve_html_children( $a );
 	}
 
-	$class = resolve_attrs_prop( $block['attrs'], 'className' );
-	$variant = null;
+	$variant = resolve_attrs_classname_variant( $block['attrs'] );;
 	$icon = null;
-	if ( $class !== '' ) {
-		$variant = $class;
-		$variant = filter_classes_starting_with( $variant, 'is-');
-		$variant = filter_classes_starting_with( $variant, 'has-');
-		$variant = filter_classes_starting_with( $variant, 'wp-');
+	if ( $variant ) {
 		if ( substr( $variant, 0, 5 ) === 'icon-' ) {
 			$icon = str_replace( 'icon-', '', $variant );
 			$variant = 'icon';

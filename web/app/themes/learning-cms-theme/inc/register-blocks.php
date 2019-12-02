@@ -15,6 +15,26 @@ foreach ( glob(  __DIR__ . '/blocks/data/*.php' ) as $filename ){
 	require_once $filename;
 }
 /**
+ * Adjust the display of the blocks in the editor, to be closer to the real
+ * layout.
+ *
+ * @package  Learning CMS
+ */
+add_action('admin_head', function() {
+	echo '
+		<style>
+			.wp-block[data-type="acf/file-download"],
+			.wp-block[data-type="acf/posts-list"],
+			.wp-block[data-type="core/button"],
+			.wp-block[data-type="core/heading"],
+			.wp-block[data-type="core/list"],
+			.wp-block[data-type="core/paragraph"] {
+				max-width: none;
+			}
+		</style>
+	';
+});
+/**
  * Configure the allowed editor blocks.
  *
  * @package  Learning CMS
@@ -76,12 +96,12 @@ add_filter( 'allowed_block_types', function( $allowed_block_types, $post ) {
 		'core/gallery',
 		'core/group',
 		'core/heading',
-		// 'core/html',
+		'core/html',
 		'core/image',
 		// 'core/latest-comments',
 		// 'core/latest-posts',
 		'core/list',
-		// 'core/media-text',
+		'core/media-text',
 		// 'core/missing',
 		// 'core/more',
 		// 'core/nextpage',

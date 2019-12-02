@@ -1,20 +1,22 @@
 <?php
 function convert_html_to_object( $html, $default = null ) {
 	if ($default === null) {
-		$default = (object) null;
+		$default = null;
 	}
 	if (!$html) {
 		return $default;
 	}
-	$dom = new DOMDocument();
+	$dom = new DOMDocument( '1.0', 'utf-8' );
 	libxml_use_internal_errors(true);
-	$dom->loadHTML( $html );
+	$dom->loadHTML( mb_convert_encoding( $html, 'HTML-ENTITIES', 'UTF-8' ) );
 	libxml_clear_errors();
 	if (!$dom->documentElement) {
 		return $default;
 	}
+
 	$obj = convert_element_to_object( $dom->documentElement );
-	if ($obj['innerChildren'] &&
+	if ($obj &&
+		$obj['innerChildren'] &&
 		$obj['innerChildren'][0] &&
 		$obj['innerChildren'][0]['innerChildren'] &&
 		$obj['innerChildren'][0]['innerChildren'][0]){
@@ -24,6 +26,10 @@ function convert_html_to_object( $html, $default = null ) {
 }
 
 function convert_element_to_object( $element ) {
+
+	if ( get_class($element) !== 'DOMElement' ) {
+		return null;
+	}
 	$obj = array();
 	$obj['tag'] = $element->tagName;
 	$obj['attributes'] = array();
@@ -45,6 +51,12 @@ function convert_element_to_object( $element ) {
 			$obj['innerChildren'][] = array(
 				'tag' => 'text',
 				'text' => $subElement->wholeText
+			);
+		}
+		else if ( $subElement->nodeName == '#cdata-section' ) {
+			$obj['innerChildren'][] = array(
+				'tag' => 'cdata',
+				'data' => $subElement->wholeText
 			);
 		}
 		else {
