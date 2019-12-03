@@ -19,7 +19,7 @@ add_action( 'rest_api_init', function () {
 				if (isset( $post ) &&
 					isset( $post['content'] ) &&
 					isset( $post['content']['raw'] )) {
-					return parse_content_to_blocks( $post['content']['raw'] );
+					return parse_content_to_blocks( $post['content']['raw'], $post['id'] );
 				}
 				return array();
 			},

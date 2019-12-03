@@ -12,9 +12,9 @@ add_action( 'graphql_register_types', function() {
 				'type' => 'String',
 				'description' => __( 'The raw block content of the post.', 'strawbees-headless-wp' ),
 				'resolve' => function( $post ) {
-					$content_post = get_post($post->ID);
+					$content_post = get_post( $post->ID );
 					$content_raw = $content_post->post_content;
-					return json_encode(parse_content_to_blocks($content_raw));
+					return json_encode( parse_content_to_blocks( $content_raw, $post->ID ) );
 				}
 			] );
 		}

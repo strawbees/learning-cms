@@ -34,6 +34,7 @@ add_theme_support( 'editor-font-sizes', array(
 		'slug' => 'huge'
 	)
 ));
+
 add_theme_support( 'editor-color-palette', array(
 	array(
 		'name'  => esc_html__( 'Transparent', 'strawbees-headless-wp' ),
@@ -48,17 +49,17 @@ add_theme_support( 'editor-color-palette', array(
 	array(
 		'name'  => esc_html__( 'Light Grey', 'strawbees-headless-wp' ),
 		'slug' => 'lightGrey',
-		'color' => '#EBEBEB',
+		'color' => '#E6E6E6',
 	),
 	array(
 		'name'  => esc_html__( 'Dark Grey', 'strawbees-headless-wp' ),
 		'slug' => 'darkGrey',
-		'color' => '#525252',
+		'color' => '#4D4D4D',
 	),
 	array(
 		'name'  => esc_html__( 'Black', 'strawbees-headless-wp' ),
 		'slug' => 'black',
-		'color' => '#303030',
+		'color' => '#272727',
 	),
 	array(
 		'name'  => esc_html__( 'Blue', 'strawbees-headless-wp' ),
@@ -78,7 +79,7 @@ add_theme_support( 'editor-color-palette', array(
 	array(
 		'name'  => esc_html__( 'Yellow', 'strawbees-headless-wp' ),
 		'slug' => 'yellow',
-		'color' => '#FEB702',
+		'color' => '#FFC016',
 	),
 	array(
 		'name'  => esc_html__( 'White (75% transparent)', 'strawbees-headless-wp' ),
