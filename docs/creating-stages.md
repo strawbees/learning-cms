@@ -11,7 +11,8 @@ to fork (or use an existing snapshot).
 
 ## 2. Create a new instance from the snapshot
 Once you have the snapshot, click on it's menu (3 vertical dots) > "Create new
-instance". Make sure to name the instance properly, eg.`learning-cms-fork`.
+instance". Make sure to name the instance properly, eg.
+`application-instance-stage-2019-11-30`.
 
 Once the new instance is created, you can delete the snapshot.
 
@@ -29,7 +30,7 @@ are not using a domain) you will need to ssh into it and update the vhosts.
 The new instance has the SSH key as the source one, so you will use the same
 process to connect to it. Just make sure to use the correct HOST. For example:
 ```shell
-ssh -i ~/.ssh/learning-cms-root.pem bitnami@learning-cms-fork.strawbees.com
+ssh -i ~/.ssh/application-root-ssh-key.pem bitnami@application-stage.strawbees.com
 ```
 Open the vhosts file and update the entries for `server_name`, for both servers,
 the one port 80 and the one on port 443.
