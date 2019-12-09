@@ -13,15 +13,16 @@ function get_block_data_core_image( $block ) {
 	if ( $a ) {
 		$link = resolve_html_attribute( $a, 'href' );
 	}
-	$captionHtml = null;
+	$innerHTML = null;
 	if ( $figcaption ) {
-		$captionHtml = resolve_html_children( $figcaption );
+		$innerHTML = resolve_html_children( $figcaption );
 	}
 	return array(
-		'sizeFormat'  => resolve_attrs_size_format( $block['attrs'] ),
-		'url'         => $url,
-		'link'        => $link,
-		'captionHtml' => $captionHtml,
+		'sizeFormat'   => resolve_attrs_size_format( $block['attrs'] ),
+		'url'          => $url,
+		'link'         => $link,
+		'innerHTML'    => $innerHTML,
+		// 'innerHTMLRaw' => $block['innerHTML'],
 	);
 }
 ?>

@@ -11,14 +11,14 @@ function get_block_data_core_gallery( $block ) {
 		if ( $a ) {
 			$link = resolve_html_attribute( $a, 'href' );
 		}
-		$captionHtml = null;
+		$innerHTML = null;
 		if ( $figcaption ) {
-			$captionHtml = resolve_html_children( $figcaption );
+			$innerHTML = resolve_html_children( $figcaption );
 		}
 		$items[] = array(
-			'url'         => resolve_html_attribute( $img, 'src' ),
-			'link'        => $link,
-			'captionHtml' => $captionHtml,
+			'url'       => resolve_html_attribute( $img, 'src' ),
+			'link'      => $link,
+			'innerHTML' => $innerHTML,
 		);
 	}
 	return array(
