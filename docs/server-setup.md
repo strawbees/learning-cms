@@ -6,14 +6,16 @@
 * Apps + OS: `Nginx` (from Bitnami)
 * Select the SSH key pair. This will be the *root* key, that can do anything on
 the instance. If this is the first time you are provisioning this project,
-create a new one (eg. `learning-cms-root`), download it, and keep it safe with
-the owner of the project. If this key has already been issued and is in safe
-hands, just selected it from the list.
+create a new one (eg. `application-root-ssh-key`), download it, and keep it safe
+with the owner of the project. If this key has already been issued and is in
+safe hands, just selected it from the list.
   - If you have just created the key, place it in the `~/.ssh` directory and
-  harden it's permissions: `chmod 600 ~/.ssh/learning-cms-root.pem`
+  harden it's permissions: `chmod 600 ~/.ssh/application-root-ssh-key.pem`
 * Pick the suitable instance plan
-* Identify your instance properly, eg. `learning-cms-stage`
+* Identify your instance properly, eg. `application-instance-stage-2019-11-30`
 * Add a "Key-only" tag with the Identify above.
+* If you want have automatic backups (daily, for 7 days) check the "Enable
+Automatic Snapshots" box.
 * Create the instance!
 * After the instance has booted, head to the "Networking" session and create a
 static IP and attache it to the instance. If you already have an IP associated
@@ -21,9 +23,9 @@ with this service, attach it instead and skip the step below.
 * Add the IP as a `A` record to the domain/subdomain you want to associate with
 this server.
 
-|name                             |type|value        |tty|
-|---------------------------------|----|-------------|---|
-|learning-cms-stage.strawbees.com.|A   |x.xxx.xxx.xxx|360|
+|name            |type|value        |tty|
+|----------------|----|-------------|---|
+|application.com.|A   |x.xxx.xxx.xxx|360|
 
 ## 2. Install dependencies
 #### Composer
@@ -107,7 +109,7 @@ SSH into the remote instance (via the browser directly on Lightsail or with your
 own client, with the root ssh key created in the first step):
 
 ```shell
-ssh -i ~/.ssh/learning-cms-root.pem bitnami@learning-cms-stage.strawbees.com
+ssh -i ~/.ssh/application-root-ssh-key.pem bitnami@application.com
 ```
 
 Create a deploy user:
@@ -172,7 +174,7 @@ the same key for each one, but only one key per developer is recommended.
 If we did all that correctly, we should now be able to do something like this:
 ```shell
 # @localhost
-ssh deploy@learning-cms-stage.strawbees.com 'hostname; uptime'
+ssh deploy@application.com 'hostname; uptime'
 ```
 That should happen without having to enter a passphrase for your SSH key, or
 prompting you for an SSH password (which the deploy user doesn’t have anyway).
@@ -188,10 +190,9 @@ directly from Github!
 
 ## 6. Prepare files on the server
 In the following instructions, we are assuming that the name of our app is
-`wordpress`. We are also assuming the app domain will be
-`learning-cms-stage.strawbees.com` (in the `nginx-vhosts.conf`). If you are
-using these instructions for another app, change it accordingly (do a "search
-and replace")!
+`wordpress`. We are also assuming the app domain will be `application.com`
+(in the `nginx-vhosts.conf`). If you are using these instructions for another
+app, change it accordingly (do a "search and replace")!
 
 ### 6.1. Ngnix config
 Scaffold the app directories, with the correct permissions:
@@ -253,13 +254,13 @@ include /opt/bitnami/apps/wordpress/htdocs/current/web/nginx[.]conf;
 echo 'server {
     listen    80;
     root "/opt/bitnami/apps/wordpress/htdocs/current/web/";
-    server_name  learning-cms-stage.strawbees.com;
+    server_name  application.com;
     include "/opt/bitnami/apps/wordpress/conf/nginx-app.conf";
 }
 server {
     listen    443 ssl;
     root   "/opt/bitnami/apps/wordpress/htdocs/current/web/";
-    server_name  learning-cms-stage.strawbees.com;
+    server_name  application.com;
     ssl_certificate  "/opt/bitnami/apps/wordpress/conf/server.crt";
     ssl_certificate_key  "/opt/bitnami/apps/wordpress/conf/server.key";
     ssl_session_cache    shared:SSL:1m;
@@ -307,7 +308,7 @@ DB_HOST=127.0.0.1
 DB_PREFIX=wp_
 
 WP_ENV=development
-WP_HOME=https://learning-cms-stage.strawbees.com
+WP_HOME=https://application.com
 WP_SITEURL=${WP_HOME}/wp
 
 # wordpress plugins

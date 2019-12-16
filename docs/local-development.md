@@ -1,4 +1,3 @@
-#
 # Local development
 ## Dependencies
 * Docker

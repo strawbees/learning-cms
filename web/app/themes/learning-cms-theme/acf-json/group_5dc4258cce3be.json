@@ -16,21 +16,6 @@
                 "id": ""
             },
             "default_value": "#333"
-        },
-        {
-            "key": "field_5dc425f4e4082",
-            "label": "Secondary Color",
-            "name": "secondary_color",
-            "type": "color_picker",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "#AAA"
         }
     ],
     "location": [
@@ -66,5 +51,5 @@
     "description": "",
     "show_in_graphql": 1,
     "graphql_field_name": "colors",
-    "modified": 1573230952
+    "modified": 1575469760
 }

@@ -17,7 +17,7 @@ function get_block_data_core_button( $block ) {
 		}
 	}
 
-	$textAlign = resolve_attrs_prop( $block['attrs'], 'align', 'left' );
+	$horizontalAligment = resolve_attrs_prop( $block['attrs'], 'align', 'left' );
 
 	$editorOptions = get_theme_support( 'editor-color-palette' )[0];
 	$white = null;
@@ -54,13 +54,14 @@ function get_block_data_core_button( $block ) {
 	}
 
 	return array(
-		'icon'            => $icon,
-		'textAlign'       => $textAlign,
-		'textColor'       => $textColor,
-		'outlineColor'    => $outlineColor,
-		'backgroundColor' => $backgroundColor,
-		'link'            => $link,
-		'innerHTML'       => $innerHTML
+		'icon'               => $icon,
+		'horizontalAligment' => $horizontalAligment,
+		'textColor'          => $textColor,
+		'outlineColor'       => $outlineColor,
+		'backgroundColor'    => $backgroundColor,
+		'link'               => $link,
+		'innerHTML'          => $innerHTML,
+		// 'innerHTMLRaw'       => $block['innerHTML'],
 	);
 }
 ?>
