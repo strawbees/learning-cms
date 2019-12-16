@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9ac76989dfc6da998ef039aea3908f7a",
+    "content-hash": "f639d49b24bde436dd52fd809ddbe8c3",
     "packages": [
         {
             "name": "advanced-custom-fields/advanced-custom-fields-pro",
@@ -719,16 +719,16 @@
         },
         {
             "name": "wp-graphql/wp-graphql",
-            "version": "v0.4.3",
+            "version": "v0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-graphql/wp-graphql.git",
-                "reference": "2d2bb3a72dc723ac0b4ac3344940225800659ad4"
+                "reference": "6094a64332f0f1561896c1d8d1dd1942fc150c3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-graphql/wp-graphql/zipball/2d2bb3a72dc723ac0b4ac3344940225800659ad4",
-                "reference": "2d2bb3a72dc723ac0b4ac3344940225800659ad4",
+                "url": "https://api.github.com/repos/wp-graphql/wp-graphql/zipball/6094a64332f0f1561896c1d8d1dd1942fc150c3a",
+                "reference": "6094a64332f0f1561896c1d8d1dd1942fc150c3a",
                 "shasum": ""
             },
             "require": {
@@ -784,10 +784,10 @@
             ],
             "description": "GraphQL API for WordPress",
             "support": {
-                "source": "https://github.com/wp-graphql/wp-graphql/tree/v0.4.3",
+                "source": "https://github.com/wp-graphql/wp-graphql/tree/v0.5.0",
                 "issues": "https://github.com/wp-graphql/wp-graphql/issues"
             },
-            "time": "2019-12-03T14:45:56+00:00"
+            "time": "2019-12-06T17:29:13+00:00"
         },
         {
             "name": "wp-graphql/wp-graphql-acf",
@@ -1142,16 +1142,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.5.2",
+            "version": "3.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "65b12cdeaaa6cd276d4c3033a95b9b88b12701e7"
+                "reference": "557a1fc7ac702c66b0bbfe16ab3d55839ef724cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/65b12cdeaaa6cd276d4c3033a95b9b88b12701e7",
-                "reference": "65b12cdeaaa6cd276d4c3033a95b9b88b12701e7",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/557a1fc7ac702c66b0bbfe16ab3d55839ef724cb",
+                "reference": "557a1fc7ac702c66b0bbfe16ab3d55839ef724cb",
                 "shasum": ""
             },
             "require": {
@@ -1189,7 +1189,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2019-10-28T04:36:32+00:00"
+            "time": "2019-12-04T04:46:47+00:00"
         }
     ],
     "aliases": [],
