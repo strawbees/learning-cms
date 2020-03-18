@@ -8,3 +8,9 @@ This repository contains the source code of the Learning CMS. The CMS itself is 
 $ docker swarm init
 $ docker stack deploy -c stack.yml wordpress
 ```
+
+To tear down:
+```
+$ docker stack rm wordpress
+$ docker system prune
+```
