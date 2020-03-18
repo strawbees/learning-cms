@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+  db:
+    image: mariadb
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: master_password
+      MYSQL_DATABASE: wp_learning
+    volumes:
+      - "./db:/var/lib/mysql"
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8888:8080
+  wordpress:
+    image: wordpress
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: master_password
+      WORDPRESS_DB_NAME: wp_learning
+    volumes:
+      - "./wp:/var/www/html"
