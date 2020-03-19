@@ -9,8 +9,12 @@ $ docker swarm init
 $ docker stack deploy -c stack.yml wordpress
 ```
 
+(It takes a few seconds)
+
 To tear down:
 ```
 $ docker stack rm wordpress
 $ docker system prune
 ```
+
+If you are on a Linux machine, check [Portainer](https://www.portainer.io/installation/)
