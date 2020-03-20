@@ -5,6 +5,9 @@ function strawbees_learning_allowed_block_types( $allowed_block_types, $post ) {
     if ( $post->post_type !== 'post' ) {
         return $allowed_block_types;
     }
+    if ( $post->post_type !== 'page' ) {
+        return $allowed_block_types;
+    }
     return array(
 			'core/heading',
 			'core/paragraph',
