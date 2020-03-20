@@ -13,7 +13,6 @@ function strawbees_learning_allowed_block_types( $allowed_block_types, $post ) {
 			'core/gallery',
 			'core/file',
 			'embed/youtube'
-			// 'strawbees-learning/example'
 		);
 }
 
@@ -34,3 +33,10 @@ function strawbees_learning_blocks() {
 
 }
 add_action( 'init', 'strawbees_learning_blocks' );
+
+/* Add Featured Image Support To Your WordPress Theme */
+function add_feature_image() {
+	add_theme_support( 'post-thumbnails' );
+}
+
+add_action( 'after_setup_theme', 'add_feature_image' );
