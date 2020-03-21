@@ -7,4 +7,7 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /index.php [L]
 </IfModule>
+# https://github.com/docker-library/wordpress/issues/10
+php_value post_max_size 24M
+php_value upload_max_filesize 8M
 # END WordPress
