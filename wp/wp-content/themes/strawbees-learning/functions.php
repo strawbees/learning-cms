@@ -2,21 +2,19 @@
 // https://wp-dd.com/how-to-restrict-disable-blocks-in-wordpress-block-editor-gutenberg/
 // https://developer.wordpress.org/block-editor/developers/filters/block-filters/#hiding-blocks-from-the-inserter
 function strawbees_learning_allowed_block_types( $allowed_block_types, $post ) {
-    if ( $post->post_type !== 'post' ) {
-        return $allowed_block_types;
+    if ( $post->post_type == 'post'  || $post->post_type == 'page' ) {
+			return array(
+				'core/heading',
+				'core/paragraph',
+				'core/list',
+				'core/image',
+				'core/gallery',
+				'core/file',
+				'embed/youtube',
+				'strawbees-learning/related'
+			);
     }
-    if ( $post->post_type !== 'page' ) {
-        return $allowed_block_types;
-    }
-    return array(
-			'core/heading',
-			'core/paragraph',
-			'core/list',
-			'core/image',
-			'core/gallery',
-			'core/file',
-			'embed/youtube'
-		);
+		return $allowed_block_types;
 }
 
 add_filter( 'allowed_block_types', 'strawbees_learning_allowed_block_types', 10, 2 );
