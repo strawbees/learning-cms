@@ -5,13 +5,15 @@ function strawbees_learning_allowed_block_types( $allowed_block_types, $post ) {
     if ( $post->post_type == 'post'  || $post->post_type == 'page' ) {
 			return array(
 				'core/heading',
+				'core/button',
 				'core/paragraph',
 				'core/list',
 				'core/image',
 				'core/gallery',
 				'core/file',
 				'embed/youtube',
-				'strawbees-learning/related'
+				'strawbees-learning/related',
+				'strawbees-learning/horizontal'
 			);
     }
 		return $allowed_block_types;
@@ -41,3 +43,12 @@ function add_feature_image() {
 }
 
 add_action( 'after_setup_theme', 'add_feature_image' );
+
+// Register menu
+function register_custom_nav_menus() {
+	register_nav_menus( array(
+		'header_menu' => 'Header Menu',
+		'footer_menu' => 'Footer Menu'
+	) );
+}
+add_action( 'after_setup_theme', 'register_custom_nav_menus' );
