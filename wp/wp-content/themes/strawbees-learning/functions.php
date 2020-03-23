@@ -53,3 +53,14 @@ function register_custom_nav_menus() {
 	) );
 }
 add_action( 'after_setup_theme', 'register_custom_nav_menus' );
+
+add_action( 'graphql_register_types', function() {
+  register_graphql_field( 'Page', 'excerpt', [
+     'type' => 'String',
+     'description' => __( 'Page excerpt', 'wp-graphql' ),
+     'resolve' => function( $post ) {
+       $excerpt = get_the_excerpt( $post->ID );
+       return ! empty( $excerpt ) ? $excerpt : '';
+     }
+  ] );
+} );
