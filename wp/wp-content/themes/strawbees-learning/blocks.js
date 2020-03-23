@@ -56,10 +56,24 @@
 		// Fetch posts on database
 		var selectAllPosts = function(select) {
 			var posts = select( 'core' ).getEntityRecords( 'postType', 'post' ) || []
+			var allCategories =  select( 'core' ).getEntityRecords( 'taxonomy',  'category' )
 			posts = posts.map(function(p) {
+				// Append a full object with featured image data
 				if (p.featured_media) {
 					var media =  select( 'core' ).getMedia(p.featured_media)
 					p.featured_media_object = media
+				}
+				// Append full objects with category data inside
+				if (allCategories && p.categories && p.categories.length > 0) {
+					var categoryHash = allCategories.reduce(function(acc, category) {
+						acc[category.id] = category
+						return acc
+					}, {})
+					var categoryObjects = p.categories.map(function(category) {
+						return categoryHash[category]
+					})
+
+					p.categories_objects = categoryObjects
 				}
 				return p
 			})
