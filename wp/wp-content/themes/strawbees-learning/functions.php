@@ -43,6 +43,7 @@ function add_feature_image() {
 }
 
 add_action( 'after_setup_theme', 'add_feature_image' );
+add_post_type_support( 'page', 'excerpt' );
 
 // Register menu
 function register_custom_nav_menus() {
