@@ -11,6 +11,7 @@ function strawbees_learning_allowed_block_types( $allowed_block_types, $post ) {
 				'core/image',
 				'core/gallery',
 				'core/file',
+				'core-embed/youtube',
 				'embed/youtube',
 				'strawbees-learning/related',
 				'strawbees-learning/horizontal'
