@@ -39,3 +39,18 @@ $ docker system prune
 ```
 
 If you are on a Linux machine, check [Portainer](https://www.portainer.io/installation/)
+
+## Deploying
+
+The application will default to the local/docker configuration if the correct environment variables are not set. All can be read on `wp/wp-config.php` and ideally this would allow deploying in most server setup. The expected environment variable have the same name as the WordPress constants:
+
+```
+DB_NAME defaults to wp_learning
+DB_USER defaults to root
+DB_PASSWORD defaults to master_password
+DB_HOST defaults to db:3306
+```
+
+### Heroku
+
+1. Install [cleardb](https://elements.heroku.com/addons/cleardb) addon

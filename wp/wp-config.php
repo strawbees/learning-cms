@@ -20,16 +20,32 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', 'wp_learning');
+if (!empty($_ENV['DB_NAME'])) {
+	define( 'DB_NAME', 'wp_learning');
+} else {
+	define( 'DB_NAME', 'wp_learning');
+}
 
 /** MySQL database username */
-define( 'DB_USER', 'root');
+if (!empty($_ENV['DB_USER'])) {
+	define( 'DB_USER', 'root');
+} else {
+	define( 'DB_USER', 'root');
+}
 
 /** MySQL database password */
-define( 'DB_PASSWORD', 'master_password');
+if (!empty($_ENV['DB_PASSWORD'])) {
+	define( 'DB_PASSWORD', 'master_password');
+} else {
+	define( 'DB_PASSWORD', 'master_password');
+}
 
 /** MySQL hostname */
-define( 'DB_HOST', 'db:3306');
+if (!empty($_ENV['DB_HOST'])) {
+	define( 'DB_HOST', 'db:3306');
+} else {
+	define( 'DB_HOST', 'db:3306');
+}
 
 /** Database Charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8');
