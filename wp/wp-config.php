@@ -21,7 +21,7 @@
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
 if (!empty($_ENV['DB_NAME'])) {
-	define( 'DB_NAME', 'wp_learning');
+	define( 'DB_NAME', $_ENV['DB_NAME']);
 } else {
 	define( 'DB_NAME', 'wp_learning');
 }
