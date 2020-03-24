@@ -42,7 +42,9 @@ If you are on a Linux machine, check [Portainer](https://www.portainer.io/instal
 
 ## Deploying
 
-The application will default to the local/docker configuration if the correct environment variables are not set. All can be read on `wp/wp-config.php` and ideally this would allow deploying in most server setup. The expected environment variable have the same name as the WordPress constants:
+The application will default to settings the local/docker configuration if the correct environment variables are not set. This would allow deploying in most server setup.
+
+The expected environment variables have the same name as the WordPress constants:
 
 ```
 DB_NAME defaults to wp_learning
@@ -53,8 +55,22 @@ DB_HOST defaults to db:3306
 
 ### Heroku
 
-Heroku is expecting a repository with the app itself on the root so when pushing to heroku, push only the subtree of files from the `wp` folder:
-
-```git subtree push --prefix wp heroku master```
+#### Setup
 
 1. Install [cleardb](https://elements.heroku.com/addons/cleardb) addon
+1. Install and login [heroku cli](https://devcenter.heroku.com/articles/heroku-cliheroku logs --tail)
+
+There are a few files on `wp` folder that are specifically for the heroku setup:
+
+- `composer.json`: Helps heroku detecting the PHP buildpack
+- `Procfile`: Tells heroku how to start the application
+- `apache.conf`: Tells heroku what are the apache configurations to use
+- `.user.ini`: [Heroku PHP user configuration](https://devcenter.heroku.com/articles/custom-php-settings#php-runtime-settings)
+
+#### Deploy
+
+Heroku is expecting a repository with the app itself on the root so when pushing to heroku, push only the subtree of files from the `wp` folder:
+
+```
+git subtree push --prefix wp heroku master
+```
