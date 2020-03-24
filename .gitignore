@@ -11,3 +11,5 @@
 
 db
 wp/wp-content/uploads
+composer.phar
+wp/vendor
