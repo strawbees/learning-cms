@@ -22,16 +22,27 @@
 
 		// Component for Checkbox + Post title (and save)
 		var postItem = function(post, props) {
-			let postAlreadyExists = props.attributes.related.find(function(related) {
+			var postAlreadyExists = props.attributes.related.find(function(related) {
 				return related.id === post.id
 			})
 			var state = element.useState(!!postAlreadyExists)
 			var setChecked = function(checked) {
 				state[1](checked)
 				if (postAlreadyExists && !checked) {
+					var filteredPosts = props.attributes.related.filter(function(related) {
+						return related.id !== post.id
+					})
 					props.setAttributes({
-						related: props.attributes.related.filter(function(related) {
-							return related.id !== post.id
+						related: filteredPosts.map(function(p) {
+							return {
+								id: p.id,
+								title: p.title,
+								categories: p.categories,
+								excerpt: p.excerpt,
+								featured_media: p.featured_media,
+								link: p.link,
+								path: p.path
+							}
 						})
 					})
 				}
@@ -104,7 +115,9 @@
 								overflow: 'scroll'
 							}
 						},
-						props.posts.map((post) => postItem(post, props))
+						props.posts.map(function(post) {
+							return postItem(post, props)
+						})
 					)
 				} else {
 					return el(
