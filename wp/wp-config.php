@@ -28,21 +28,21 @@ if (!empty($_ENV['DB_NAME'])) {
 
 /** MySQL database username */
 if (!empty($_ENV['DB_USER'])) {
-	define( 'DB_USER', 'root');
+	define( 'DB_USER', $_ENV['DB_USER']);
 } else {
 	define( 'DB_USER', 'root');
 }
 
 /** MySQL database password */
 if (!empty($_ENV['DB_PASSWORD'])) {
-	define( 'DB_PASSWORD', 'master_password');
+	define( 'DB_PASSWORD', $_ENV['DB_PASSWORD']);
 } else {
 	define( 'DB_PASSWORD', 'master_password');
 }
 
 /** MySQL hostname */
 if (!empty($_ENV['DB_HOST'])) {
-	define( 'DB_HOST', 'db:3306');
+	define( 'DB_HOST', $_ENV['DB_HOST']);
 } else {
 	define( 'DB_HOST', 'db:3306');
 }
