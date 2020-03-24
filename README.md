@@ -53,4 +53,8 @@ DB_HOST defaults to db:3306
 
 ### Heroku
 
+Heroku is expecting a repository with the app itself on the root so when pushing to heroku, push only the subtree of files from the `wp` folder:
+
+```git subtree push --prefix wp heroku master```
+
 1. Install [cleardb](https://elements.heroku.com/addons/cleardb) addon
