@@ -53,6 +53,14 @@ define( 'DB_CHARSET', 'utf8');
 /** The Database Collate type. Don't change this if in doubt. */
 define( 'DB_COLLATE', '');
 
+if ( !empty($_ENV['S3_KEY']) && !empty($_ENV['S3_SECRET']) ) {
+	define( 'AS3CF_SETTINGS', serialize( array(
+		'provider' => 'aws',
+		'access-key-id' => $_ENV['S3_KEY'],
+		'secret-access-key' => $_ENV['S3_SECRET'],
+	) ) );
+}
+
 /**#@+
  * Authentication Unique Keys and Salts.
  *
