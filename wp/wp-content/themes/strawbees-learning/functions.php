@@ -21,7 +21,7 @@ function strawbees_learning_allowed_block_types( $allowed_block_types, $post ) {
 }
 add_filter( 'allowed_block_types', 'strawbees_learning_allowed_block_types', 10, 2 );
 
-function strawbees_learning_blocks() {
+function register_strawbees_learning_blocks() {
 
     wp_register_script(
         'strawbees-learning-blocks',
@@ -39,11 +39,11 @@ function strawbees_learning_blocks() {
     );
 
     register_block_type( 'strawbees-learning/blocks', array(
-        'editor_script' => 'strawbees-learning-blocks',
+        'editor_script' => 'strawbees-learning-blocks'
     ) );
 
 }
-add_action( 'init', 'strawbees_learning_blocks' );
+add_action( 'init', 'register_strawbees_learning_blocks' );
 
 /* Add Featured Image Support To Your WordPress Theme */
 function add_feature_image() {
@@ -63,33 +63,19 @@ function register_custom_nav_menus() {
 }
 add_action( 'after_setup_theme', 'register_custom_nav_menus' );
 
-add_action(
-	'rest_api_init',
-	function ( )
-	{
-
-		if ( ! function_exists( 'use_block_editor_for_post_type' ) )
-		{
-			require ABSPATH . 'wp-admin/includes/post.php';
-		}
-
-		$key_name = 'blocks';
-		$post_types = get_post_types_by_support( [ 'editor' ] );
-		foreach ( $post_types as $post_type )
-		{
-			if ( use_block_editor_for_post_type( $post_type ) )
-			{
-				register_rest_field(
-					$post_type,
-					$key_name,
-					[
-						'get_callback' => function ( array $post )
-						{
-							return parse_blocks( $post['content']['raw'] );
-						},
-					]
-				);
-			}
-		}
-	}
-);
+function get_header_menu() {
+    return wp_get_nav_menu_items('header-menu');
+}
+function get_footer_menu() {
+    return wp_get_nav_menu_items('footer-menu');
+}
+add_action( 'rest_api_init', function () {
+    register_rest_route( 'wp/v2', 'header-menu', array(
+        'methods' => 'GET',
+        'callback' => 'get_header_menu',
+    ) );
+    register_rest_route( 'wp/v2', 'footer-menu', array(
+        'methods' => 'GET',
+        'callback' => 'get_footer_menu',
+    ) );
+} );

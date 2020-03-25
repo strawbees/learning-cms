@@ -29,27 +29,27 @@
 			var setChecked = function(checked) {
 				state[1](checked)
 				if (postAlreadyExists && !checked) {
-					var filteredPosts = props.attributes.related.filter(function(related) {
-						return related.id !== post.id
-					})
 					props.setAttributes({
-						related: filteredPosts.map(function(p) {
-							return {
-								id: p.id,
-								title: p.title,
-								categories: p.categories,
-								excerpt: p.excerpt,
-								featured_media: p.featured_media,
-								link: p.link,
-								path: p.path
-							}
+						related: props.attributes.related.filter(function(related) {
+							return related.id !== post.id
 						})
 					})
 				}
 				if (!postAlreadyExists && checked) {
+					var featured_media_object = {
+						source_url: post.featured_media_object ? post.featured_media_object.source_url : ''
+					}
 					props.setAttributes({
 						related: [
-							post,
+							{
+									id: post.id,
+									title: post.title,
+									categories_objects: post.categories_objects,
+									excerpt: post.excerpt,
+									featured_media_object: featured_media_object,
+									link: post.link,
+									path: post.path
+							},
 							...props.attributes.related
 						]
 					})
@@ -68,31 +68,27 @@
 		var selectAllPosts = function(select) {
 			var posts = select( 'core' ).getEntityRecords( 'postType', 'post' ) || []
 			var allCategories =  select( 'core' ).getEntityRecords( 'taxonomy',  'category' )
-			posts = posts.map(function(p) {
+			return { posts: posts.map(function(post) {
 				// Append a full object with featured image data
-				if (p.featured_media) {
-					var media =  select( 'core' ).getMedia(p.featured_media)
-					p.featured_media_object = media
+				if (post.featured_media) {
+					var media = select( 'core' ).getMedia(post.featured_media)
+					post.featured_media_object = media
 				}
 				// Append full objects with category data inside
-				if (allCategories && p.categories && p.categories.length > 0) {
+				if (allCategories && post.categories && post.categories.length > 0) {
 					var categoryHash = allCategories.reduce(function(acc, category) {
 						acc[category.id] = category
 						return acc
 					}, {})
-					var categoryObjects = p.categories.map(function(category) {
+					var categoryObjects = post.categories.map(function(category) {
 						return categoryHash[category]
 					})
-
-					p.categories_objects = categoryObjects
+					post.categories_objects = categoryObjects
 				}
-				return p
-			})
-			return {
-				posts: posts
-			}
+				return post
+			}) }
 		}
-		var withAllPosts = withSelect(selectAllPosts)
+
 		var related_settings = {
 		  title: 'Related Posts',
 		  category: 'common',
@@ -100,28 +96,46 @@
 			attributes: {
 				related: { type: 'array' }
 			},
-		  description: 'Start with the building block of all narrative.',
-		  save: function() { return null }, // Don't save any markup
-		  edit: withAllPosts(function( props ) {
+		  description: 'Related posts',
+			save: function(props) {
+				// This will be rendered to the html tree
+				return el(
+					'div',
+					{ className: props.className },
+					props.attributes.related.map(function(post) {
+						let category = {}
+						if (post.categories_objects && post.categories_objects[0]) {
+							category = post.categories_objects[0]
+						}
+						return el(
+							'div', { className: 'related-post' },
+							[
+								el('a', { className: 'title', href: post.link }, post.title.raw),
+								el('img', { className: 'featured-media', src: post.featured_media_object.source_url  }),
+								el('p', { className: 'excerpt' }, post.excerpt.raw),
+								el('a', { className: 'category', href: category.link }, category.name),
+							]
+						)
+					})
+				);
+			},
+		  edit: withSelect(selectAllPosts)
+			(function( props ) {
+				// This will be displayed on Gutenberg
 				if (!props.attributes.related) {
 					props.setAttributes({ related: [] })
 				}
 				if (props.posts) {
 					return el(
 						'div',
-						{
-							style: {
-								height: '150px',
-								overflow: 'scroll'
-							}
-						},
+						{ style: { height: '150px', overflow: 'scroll' } },
 						props.posts.map(function(post) {
 							return postItem(post, props)
 						})
 					)
 				} else {
 					return el(
-						Spinner
+						'div', { style: { height: '150px' } }, 'Loading...'
 					)
 				}
 			})
@@ -135,7 +149,7 @@
 			attributes: {
 				innerBlocks: { type: 'array' }
 			},
-		  description: 'Start with the building block of all narrative.',
+		  description: 'A grey horizontal section',
 		  edit: function(props) {
 				return el(
 					'div',
@@ -146,7 +160,7 @@
 		  save: function(props) {
 				return el(
 					'div',
-					{ className: props.className },
+					{},
 					el( InnerBlocks.Content )
 				);
 			}
