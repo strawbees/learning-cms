@@ -37,6 +37,8 @@ $ docker system prune
 
 If you are on a Linux machine, check [Portainer](https://www.portainer.io/installation/)
 
+Note: When your WordPress container starts it will mess up with `wp/wp-config.php` and `.httaccess`. Do not commit those changes. Discard the changes on those files with your favorite git ninja moves.
+
 ## Deploying
 
 The application will default to settings the local/docker configuration if the correct environment variables are not set. This would allow deploying in most server setup.
