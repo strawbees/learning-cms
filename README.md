@@ -50,6 +50,8 @@ DB_NAME defaults to wp_learning
 DB_USER defaults to root
 DB_PASSWORD defaults to master_password
 DB_HOST defaults to db:3306
+S3_KEY
+S3_SECRET
 ```
 
 ### Heroku
