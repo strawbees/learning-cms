@@ -6,12 +6,9 @@ This repository contains the source code of the Strawbees Learning CMS. The CMS 
 
 ## Installed Plugins
 
-Make sure these plugins (`wp/wp-content/plugins`) are activated:
+Make sure the plugins (`wp/wp-content/plugins`) are activated:
 
 - [`amazon-s3-and-cloudfront`](https://github.com/deliciousbrains/wp-amazon-s3-and-cloudfront)
-- [`wp-graphql`](https://www.wpgraphql.com)
-- [`wp-graphql-gutenberg`](https://github.com/pristas-peter/wp-graphql-gutenberg)
-- [`wp-graphiql`](https://github.com/wp-graphql/wp-graphiql)
 
 ## Theme
 
