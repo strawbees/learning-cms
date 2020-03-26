@@ -10,10 +10,6 @@ services:
       MYSQL_DATABASE: wp_learning
     volumes:
       - "./db:/var/lib/mysql"
-  adminer:
-    image: adminer
-    ports:
-      - 8888:8080
   wordpress:
     image: wordpress
     ports:
@@ -23,5 +19,11 @@ services:
       WORDPRESS_DB_USER: root
       WORDPRESS_DB_PASSWORD: master_password
       WORDPRESS_DB_NAME: wp_learning
+      S3_KEY: XXX
+      S3_SECRET: XXX
     volumes:
       - "./wp:/var/www/html"
+  adminer: # Not required
+    image: adminer
+    ports:
+      - 8888:8080
