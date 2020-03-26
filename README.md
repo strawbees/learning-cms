@@ -1,6 +1,6 @@
 # Learning CMS
 
-This repository contains the source code of the Strawbees Learning CMS. The CMS itself is a WordPress installation. It provides data to the clients via WordPress's via a GraphQL endpoint (or built-in REST API).
+This repository contains the source code of the Strawbees Learning CMS. The CMS itself is a WordPress installation. It provides data to the clients via WordPress's via built-in REST API.
 
 **No front end will be rendered from this CMS, this is a strictly headless WordPress setup**.
 
