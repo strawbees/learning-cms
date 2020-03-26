@@ -22,6 +22,9 @@
 
 		// Component for Checkbox + Post title (and save)
 		var postItem = function(post, props) {
+			if (!props.attributes.related) {
+				props.attributes.related = []
+			}
 			var postAlreadyExists = props.attributes.related.find(function(related) {
 				return related.id === post.id
 			})
@@ -122,9 +125,6 @@
 		  edit: withSelect(selectAllPosts)
 			(function( props ) {
 				// This will be displayed on Gutenberg
-				if (!props.attributes.related) {
-					props.setAttributes({ related: [] })
-				}
 				if (props.posts) {
 					return el(
 						'div',
