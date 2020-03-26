@@ -10,6 +10,7 @@
 !.env.example
 
 db
+db_bkp
 wp/wp-content/uploads
 composer.phar
 wp/vendor
