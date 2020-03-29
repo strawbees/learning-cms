@@ -69,7 +69,7 @@
 		}
 		// Fetch posts on database
 		var selectAllPosts = function(select) {
-			var posts = select( 'core' ).getEntityRecords( 'postType', 'post' ) || []
+			var posts = select( 'core' ).getEntityRecords( 'postType', 'post', { per_page: -1 } ) || []
 			var allCategories =  select( 'core' ).getEntityRecords( 'taxonomy',  'category' )
 			return { posts: posts.map(function(post) {
 				// Append a full object with featured image data
