@@ -6,7 +6,8 @@ function strawbees_learning_allowed_block_types( $allowed_block_types, $post ) {
     if ( $post->post_type == 'post'  || $post->post_type == 'page' ) {
 			return array(
 				'core/heading',
-				'core/button',
+				'core/button', // Deprecated?
+				'core/buttons', // 5.4
 				'core/paragraph',
 				'core/list',
 				'core/image',
@@ -25,21 +26,32 @@ add_filter( 'allowed_block_types', 'strawbees_learning_allowed_block_types', 10,
 // Register special blocks
 function register_strawbees_learning_blocks() {
     wp_register_script(
-        'strawbees-learning-blocks',
-        get_theme_file_uri( 'blocks.js' ),
+        'strawbees-learning-horizontal',
+        get_theme_file_uri( 'blocks/horizontal.js' ),
         array(
 					'wp-blocks',
-					'wp-components',
 					'wp-element',
-					'wp-block-editor',
-					'wp-data',
-					'wp-editor',
-					'wp-element'
+					'wp-block-editor'
 				),
-        '1.0.0'
+        '1.0.1'
     );
-    register_block_type( 'strawbees-learning/blocks', array(
-        'editor_script' => 'strawbees-learning-blocks'
+    register_block_type( 'strawbees-learning/horizontal', array(
+        'editor_script' => 'strawbees-learning-horizontal'
+    ) );
+    wp_register_script(
+        'strawbees-learning-related',
+        get_theme_file_uri( 'blocks/related.js' ),
+        array(
+					'wp-blocks',
+					'wp-element',
+					'wp-data',
+					'wp-components',
+					'wp-block-editor'
+				),
+        '1.0.1'
+    );
+    register_block_type( 'strawbees-learning/related', array(
+        'editor_script' => 'strawbees-learning-related'
     ) );
 }
 add_action( 'init', 'register_strawbees_learning_blocks' );
