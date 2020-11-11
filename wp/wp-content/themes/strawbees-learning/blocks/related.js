@@ -15,13 +15,13 @@
 	var dataWrapper = withSelect(selectAllPosts)
 	// Block options
 	var related_settings = {
-	  title: 'Related Posts',
-	  category: 'common',
-	  icon: 'admin-page',
+		title: 'Related Posts',
+		category: 'common',
+		icon: 'admin-page',
 		attributes: {
 			related: { type: 'array' }
 		},
-	  description: 'Related posts',
+		description: 'Related posts',
 		save: function(props) {
 			// This will be rendered to the html
 			let related = props.attributes.related || []
@@ -37,7 +37,7 @@
 				})
 			);
 		},
-	  edit: dataWrapper(function( props ) {
+		edit: dataWrapper(function( props ) {
 			// This will be displayed on Gutenberg
 			var allPosts = props.posts
 			var related = props.attributes.related || []
