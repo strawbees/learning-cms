@@ -3,7 +3,7 @@
 // https://developer.wordpress.org/block-editor/developers/filters/block-filters/#hiding-blocks-from-the-inserter
 // Filter block types on Gutenberg
 function strawbees_learning_allowed_block_types( $allowed_block_types, $post ) {
-    if ( $post->post_type == 'post'  || $post->post_type == 'page' ) {
+	if ( $post->post_type == 'post'  || $post->post_type == 'page' ) {
 			return array(
 				'core/heading',
 				'core/button', // Deprecated?
@@ -18,41 +18,41 @@ function strawbees_learning_allowed_block_types( $allowed_block_types, $post ) {
 				'strawbees-learning/related',
 				'strawbees-learning/horizontal'
 			);
-    }
+	}
 		return $allowed_block_types;
 }
 add_filter( 'allowed_block_types', 'strawbees_learning_allowed_block_types', 10, 2 );
 
 // Register special blocks
 function register_strawbees_learning_blocks() {
-    wp_register_script(
-        'strawbees-learning-horizontal',
-        get_theme_file_uri( 'blocks/horizontal.js' ),
-        array(
+	wp_register_script(
+		'strawbees-learning-horizontal',
+		get_theme_file_uri( 'blocks/horizontal.js' ),
+		array(
 					'wp-blocks',
 					'wp-element',
 					'wp-block-editor'
 				),
-        '1.0.1'
-    );
-    register_block_type( 'strawbees-learning/horizontal', array(
-        'editor_script' => 'strawbees-learning-horizontal'
-    ) );
-    wp_register_script(
-        'strawbees-learning-related',
-        get_theme_file_uri( 'blocks/related.js' ),
-        array(
+		'1.0.1'
+	);
+	register_block_type( 'strawbees-learning/horizontal', array(
+		'editor_script' => 'strawbees-learning-horizontal'
+	) );
+	wp_register_script(
+		'strawbees-learning-related',
+		get_theme_file_uri( 'blocks/related.js' ),
+		array(
 					'wp-blocks',
 					'wp-element',
 					'wp-data',
 					'wp-components',
 					'wp-block-editor'
 				),
-        '1.0.1'
-    );
-    register_block_type( 'strawbees-learning/related', array(
-        'editor_script' => 'strawbees-learning-related'
-    ) );
+		'1.0.1'
+	);
+	register_block_type( 'strawbees-learning/related', array(
+		'editor_script' => 'strawbees-learning-related'
+	) );
 }
 add_action( 'init', 'register_strawbees_learning_blocks' );
 
@@ -76,18 +76,18 @@ add_action( 'after_setup_theme', 'register_custom_nav_menus' );
 
 // Put menus on REST API
 function get_header_menu() {
-    return wp_get_nav_menu_items('header-menu');
+	return wp_get_nav_menu_items('header-menu');
 }
 function get_footer_menu() {
-    return wp_get_nav_menu_items('footer-menu');
+	return wp_get_nav_menu_items('footer-menu');
 }
 add_action( 'rest_api_init', function () {
-    register_rest_route( 'wp/v2', 'header-menu', array(
-        'methods' => 'GET',
-        'callback' => 'get_header_menu',
-    ) );
-    register_rest_route( 'wp/v2', 'footer-menu', array(
-        'methods' => 'GET',
-        'callback' => 'get_footer_menu',
-    ) );
+	register_rest_route( 'wp/v2', 'header-menu', array(
+		'methods' => 'GET',
+		'callback' => 'get_header_menu',
+	) );
+	register_rest_route( 'wp/v2', 'footer-menu', array(
+		'methods' => 'GET',
+		'callback' => 'get_footer_menu',
+	) );
 } );
