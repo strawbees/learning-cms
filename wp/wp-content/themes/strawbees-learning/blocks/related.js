@@ -9,7 +9,9 @@
 	var selectAllPosts = function(select) {
 		var posts = select( 'core' )
 			.getEntityRecords( 'postType', 'post', { per_page: -1 } ) || []
-		return { posts: posts }
+		var pages = select( 'core' )
+			.getEntityRecords( 'postType', 'page', { per_page: -1 } ) || []
+		return { posts: [...posts, ...pages] }
 	}
 	// Higher order function that populates the `props` with data
 	var dataWrapper = withSelect(selectAllPosts)
