@@ -11,7 +11,7 @@
 			.getEntityRecords( 'postType', 'post', { per_page: -1 } ) || []
 		var pages = select( 'core' )
 			.getEntityRecords( 'postType', 'page', { per_page: -1 } ) || []
-		return { posts: [...posts, ...pages] }
+		return { posts: posts.concat(pages) }
 	}
 	// Higher order function that populates the `props` with data
 	var dataWrapper = withSelect(selectAllPosts)
